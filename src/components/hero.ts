@@ -138,19 +138,18 @@ export function renderHero(): void {
   const quoteEl = document.getElementById('hero-quote');
   if (!quoteEl) return;
 
+  const FADE_MS = 600; // matches the CSS transition duration
+
   setInterval(() => {
     // Fade out
     quoteEl.style.opacity = '0';
 
-    // Wait for fade-out to finish, then swap text and fade in
-    const onFadeOut = () => {
-      quoteEl.removeEventListener('transitionend', onFadeOut);
+    // After fade-out completes, swap text then fade in
+    setTimeout(() => {
       currentIndex = (currentIndex + 1) % QUOTES.length;
       quoteEl.textContent = `"${QUOTES[currentIndex]}"`;
-      // Force reflow before fading in
       void quoteEl.offsetWidth;
       quoteEl.style.opacity = '1';
-    };
-    quoteEl.addEventListener('transitionend', onFadeOut, { once: true });
+    }, FADE_MS);
   }, 5000);
 }
