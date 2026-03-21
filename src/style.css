@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-leather: #8B4513;
+  --color-wheat: #F5DEB3;
+  --color-brick: #A52A2A;
+  --color-gold: #DAA520;
+  --color-dark: #1a0f00;
+  --color-wood: #3e2110;
+
+  --font-western: "Rye", cursive;
+  --font-body: "Lora", serif;
+}
