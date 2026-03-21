@@ -6,6 +6,7 @@ import {
 } from '../calendar';
 
 const DAY_HEADERS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
 
 const FALLBACK_JOKES = [
   'Chuck Norris peut diviser par zéro.',
@@ -91,11 +92,16 @@ function render(
     <div class="py-16 px-4"
          style="background: linear-gradient(180deg, #1a0f00 0%, #2a1508 50%, #1a0f00 100%);">
       <div class="max-w-7xl mx-auto">
-        <!-- Section title -->
-        <h2 class="font-western text-gold text-4xl md:text-5xl text-center mb-8"
-            style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
-          Calendrier Lunaire ACN
-        </h2>
+        <!-- Section title with Chuck -->
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <img src="${CHUCK_AVATAR}" class="w-12 h-12 rounded-full border-2 border-gold hidden md:block" alt="" />
+          <h2 class="font-western text-gold text-4xl md:text-5xl text-center"
+              style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
+            Calendrier Lunaire ACN
+          </h2>
+          <img src="${CHUCK_AVATAR}" class="w-12 h-12 rounded-full border-2 border-gold hidden md:block" alt="" />
+        </div>
+        <p class="text-center text-wheat/50 font-body text-sm mb-8 italic">13 mois. 28 jours. Le seul calendrier approuvé par Chuck.</p>
 
         <!-- Year navigation -->
         <div class="flex items-center justify-center gap-4 mb-10">
@@ -103,7 +109,10 @@ function render(
                   class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer${currentYear <= 1 ? ' opacity-30 pointer-events-none' : ''}">
             &lt;
           </button>
-          <span class="font-western text-gold text-2xl md:text-3xl">An ${currentYear}</span>
+          <div class="flex items-center gap-2">
+            <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full" alt="" />
+            <span class="font-western text-gold text-2xl md:text-3xl">An ${currentYear}</span>
+          </div>
           <button id="year-next"
                   class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer">
             &gt;
@@ -116,15 +125,16 @@ function render(
         </div>
 
         <!-- Jour(s) de Chuck -->
-        <div class="bg-dark/80 border border-leather rounded-lg p-6 text-center max-w-md mx-auto">
+        <div class="bg-dark/80 border-2 border-gold/50 rounded-lg p-6 text-center max-w-md mx-auto">
+          <img src="${CHUCK_AVATAR}" class="w-14 h-14 rounded-full border-2 border-gold mx-auto mb-3" alt="" />
           <h3 class="font-western text-gold text-xl mb-4">
             Jour${chuckDaysCount > 1 ? 's' : ''} de Chuck
           </h3>
           <div class="flex items-center justify-center gap-4">
             ${chuckDaysHTML}
           </div>
-          <p class="text-wheat/60 text-sm mt-3 font-body">
-            ${chuckDaysCount} jour${chuckDaysCount > 1 ? 's' : ''} sacré${chuckDaysCount > 1 ? 's' : ''}
+          <p class="text-wheat/60 text-sm mt-3 font-body italic">
+            ${chuckDaysCount} jour${chuckDaysCount > 1 ? 's' : ''} sacré${chuckDaysCount > 1 ? 's' : ''} hors du temps
           </p>
         </div>
       </div>
@@ -137,7 +147,7 @@ function render(
                 class="absolute top-3 right-4 text-gold text-2xl cursor-pointer hover:text-wheat transition-colors">
           &times;
         </button>
-        <p class="text-gold font-western text-xl mb-4">★</p>
+        <img src="${CHUCK_AVATAR}" class="w-16 h-16 rounded-full border-2 border-gold mx-auto mb-4" alt="Chuck dit:" />
         <p id="calendar-joke-text" class="font-body text-wheat text-lg leading-relaxed"></p>
       </div>
     </div>

@@ -1,3 +1,5 @@
+const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+
 const NAV_LINKS = [
   { label: 'Accueil', href: '#hero' },
   { label: 'Calendrier', href: '#calendar' },
@@ -16,10 +18,13 @@ export function renderNavbar(): void {
 
   nav.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="#hero" class="font-western text-gold text-xl tracking-wide">ChuckCalendar</a>
+      <a href="#hero" class="flex items-center gap-2 group">
+        <img src="${CHUCK_AVATAR}" alt="Chuck" class="w-9 h-9 rounded-full border-2 border-gold group-hover:scale-110 transition-transform" />
+        <span class="font-western text-gold text-lg tracking-wide">CHUCK<span class="text-wheat">CALENDAR</span></span>
+      </a>
 
       <!-- Desktop links -->
-      <ul class="hidden md:flex gap-6">
+      <ul class="hidden md:flex gap-6 items-center">
         ${NAV_LINKS.map(
           (l) =>
             `<li><a href="${l.href}" class="nav-link text-wheat hover:text-gold transition-colors duration-200 font-body text-sm">${l.label}</a></li>`
@@ -27,7 +32,7 @@ export function renderNavbar(): void {
       </ul>
 
       <!-- Hamburger -->
-      <button id="nav-toggle" class="md:hidden text-wheat hover:text-gold transition-colors" aria-label="Menu">
+      <button id="nav-toggle" class="md:hidden text-wheat hover:text-gold transition-colors cursor-pointer" aria-label="Menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>

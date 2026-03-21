@@ -1,12 +1,36 @@
 import { getTodayACN } from '../calendar';
 
+const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+
 const QUOTES = [
   'Chuck Norris ne meurt pas. Il décide simplement de vivre ailleurs.',
   'La mort a eu un jour de congé. Chuck Norris lui a dit de ne pas revenir.',
   'Le temps ne passe pas. Il demande la permission à Chuck Norris.',
   'Chuck Norris a déjà compté jusqu\u2019à l\u2019infini. Deux fois.',
   'Quand Chuck Norris fait des pompes, il ne se soulève pas. Il repousse la Terre.',
+  'Sous la barbe de Chuck Norris, il n\'y a pas de menton. Il y a un autre poing.',
+  'Chuck Norris ne dort pas. Il attend.',
+  'La seule chose qui arrive à l\'heure sans Chuck Norris, c\'est Chuck Norris.',
 ];
+
+function formatACNTime(): string {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  return `${h}:${m}:${s}`;
+}
+
+function getTimeSinceDeath(): string {
+  const deathDate = new Date(2026, 2, 19); // March 19, 2026
+  const now = new Date();
+  const diff = now.getTime() - deathDate.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  return `${days}j ${hours}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+}
 
 export function renderHero(): void {
   const hero = document.getElementById('hero');
@@ -20,33 +44,74 @@ export function renderHero(): void {
 
   hero.innerHTML = `
     <div class="relative min-h-screen flex items-center justify-center overflow-hidden"
-         style="background: linear-gradient(135deg, #1a0f00 0%, #3e2110 30%, #8B4513 60%, #A52A2A 80%, #1a0f00 100%);">
-      <!-- Dark overlay -->
-      <div class="absolute inset-0 bg-black/50"></div>
+         style="background: radial-gradient(ellipse at 50% 30%, #3e2110 0%, #1a0f00 60%, #000 100%);">
+      <!-- Dark overlay with vignette -->
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%);"></div>
+
+      <!-- Floating Chuck faces in background -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04]">
+        <img src="${CHUCK_AVATAR}" class="absolute top-[5%] left-[5%] w-32 rotate-[-15deg]" alt="" />
+        <img src="${CHUCK_AVATAR}" class="absolute top-[15%] right-[10%] w-24 rotate-[20deg]" alt="" />
+        <img src="${CHUCK_AVATAR}" class="absolute bottom-[20%] left-[15%] w-20 rotate-[10deg]" alt="" />
+        <img src="${CHUCK_AVATAR}" class="absolute bottom-[10%] right-[5%] w-28 rotate-[-8deg]" alt="" />
+        <img src="${CHUCK_AVATAR}" class="absolute top-[50%] left-[50%] w-96 -translate-x-1/2 -translate-y-1/2" alt="" />
+      </div>
 
       <!-- Content -->
-      <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <!-- Sheriff star -->
-        <div class="text-gold text-5xl md:text-6xl mb-6 drop-shadow-lg" style="text-shadow: 0 0 20px rgba(218,165,32,0.5);">
-          ★
+      <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <!-- Chuck's portrait -->
+        <div class="mb-8 flex justify-center">
+          <div class="relative">
+            <div class="absolute inset-0 rounded-full bg-gold/20 blur-2xl scale-125"></div>
+            <img src="${CHUCK_AVATAR}" alt="Chuck Norris"
+                 class="relative w-40 h-40 md:w-56 md:h-56 rounded-full border-4 border-gold shadow-2xl
+                        animate-[pulse_4s_ease-in-out_infinite]"
+                 style="box-shadow: 0 0 60px rgba(218,165,32,0.4), 0 0 120px rgba(218,165,32,0.2);" />
+            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-gold text-dark font-western text-xs px-3 py-1 rounded-full whitespace-nowrap">
+              1940 — ∞
+            </div>
+          </div>
         </div>
 
-        <!-- Title -->
-        <h1 class="font-western text-gold text-6xl md:text-8xl mb-4 tracking-wider"
-            style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
-          ÈRE ACN
+        <!-- Main title -->
+        <h1 class="font-western text-gold text-5xl md:text-7xl lg:text-9xl mb-2 tracking-wider"
+            style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7), 0 0 40px rgba(218,165,32,0.3);">
+          CHUCK NORRIS
         </h1>
 
-        <!-- Subtitle -->
-        <p class="font-body text-wheat text-2xl mb-8 tracking-wide">
-          Après Chuck Norris
+        <!-- Subtitle era -->
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <div class="h-px w-16 md:w-32 bg-gold/50"></div>
+          <p class="font-western text-gold/80 text-lg md:text-2xl tracking-[0.3em]">
+            ÈRE ACN
+          </p>
+          <div class="h-px w-16 md:w-32 bg-gold/50"></div>
+        </div>
+
+        <!-- Death date memorial -->
+        <p class="font-body text-brick text-sm md:text-base mb-1 tracking-wide">
+          ✝ 19 Mars 2026 — Carlos Ray Norris — Ryan, Oklahoma
+        </p>
+        <p class="font-body text-wheat/50 text-xs md:text-sm mb-6">
+          Parti depuis <span id="hero-since-death" class="text-gold/70 font-mono">${getTimeSinceDeath()}</span>
         </p>
 
-        <!-- ACN date -->
-        <p class="font-western text-gold text-xl md:text-3xl mb-12"
-           style="text-shadow: 1px 2px 4px rgba(0,0,0,0.6);">
-          ${dateDisplay}
+        <p class="font-body text-wheat/80 text-xl md:text-2xl mb-6 tracking-wide italic">
+          « Il n'est pas mort. Il a juste décidé de roundhouse-kicker Dieu en personne. »
         </p>
+
+        <!-- ACN date counter with live clock -->
+        <div class="inline-flex items-center gap-3 bg-dark/60 border border-gold/40 rounded-full px-6 py-3 mb-10">
+          <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full" alt="" />
+          <p class="font-western text-gold text-lg md:text-2xl"
+             style="text-shadow: 1px 2px 4px rgba(0,0,0,0.6);">
+            ${dateDisplay}
+          </p>
+          <span class="text-wheat/30">|</span>
+          <p id="hero-clock" class="font-mono text-gold/80 text-lg md:text-2xl tabular-nums">
+            ${formatACNTime()}
+          </p>
+        </div>
 
         <!-- Rotating quote -->
         <blockquote id="hero-quote"
@@ -54,13 +119,19 @@ export function renderHero(): void {
           "${QUOTES[0]}"
         </blockquote>
 
-        <!-- Bottom sheriff star -->
-        <div class="text-gold text-3xl mt-10 drop-shadow-lg" style="text-shadow: 0 0 15px rgba(218,165,32,0.4);">
-          ★
-        </div>
+        <!-- Scroll indicator -->
+        <div class="mt-12 animate-bounce text-gold/60 text-3xl">▼</div>
       </div>
     </div>
   `;
+
+  // Live clock update every second
+  const clockEl = document.getElementById('hero-clock');
+  const sinceDeathEl = document.getElementById('hero-since-death');
+  setInterval(() => {
+    if (clockEl) clockEl.textContent = formatACNTime();
+    if (sinceDeathEl) sinceDeathEl.textContent = getTimeSinceDeath();
+  }, 1000);
 
   // Start quote rotation
   let currentIndex = 0;
@@ -68,15 +139,12 @@ export function renderHero(): void {
   if (!quoteEl) return;
 
   setInterval(() => {
-    // Fade out
     quoteEl.classList.remove('opacity-100');
     quoteEl.classList.add('opacity-0');
 
     setTimeout(() => {
       currentIndex = (currentIndex + 1) % QUOTES.length;
       quoteEl.textContent = `"${QUOTES[currentIndex]}"`;
-
-      // Fade in
       quoteEl.classList.remove('opacity-0');
       quoteEl.classList.add('opacity-100');
     }, 700);

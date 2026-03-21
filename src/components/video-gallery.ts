@@ -1,5 +1,7 @@
 import { videos } from '../videos';
 
+const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+
 export function renderVideos(): void {
   const section = document.getElementById('videos');
   if (!section) return;
@@ -7,7 +9,7 @@ export function renderVideos(): void {
   const cardsHTML = videos
     .map(
       (video) => `
-      <div class="rounded-xl border border-leather bg-wood/30 overflow-hidden shadow-lg">
+      <div class="rounded-xl border border-leather bg-wood/30 overflow-hidden shadow-lg group hover:border-gold/50 transition-colors">
         <div class="relative w-full" style="padding-top: 56.25%;">
           <iframe
             class="absolute inset-0 w-full h-full"
@@ -18,40 +20,53 @@ export function renderVideos(): void {
             allowfullscreen
           ></iframe>
         </div>
-        <div class="p-4">
-          <h3 class="text-gold font-western text-lg mb-1">${video.title}</h3>
-          <p class="text-wheat/70 text-sm">${video.description}</p>
+        <div class="p-4 flex items-start gap-3">
+          <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full border border-gold/50 flex-shrink-0 mt-0.5" alt="" />
+          <div>
+            <h3 class="text-gold font-western text-lg mb-1">${video.title}</h3>
+            <p class="text-wheat/70 text-sm">${video.description}</p>
+          </div>
         </div>
       </div>`
     )
     .join('');
 
   section.innerHTML = `
-    <div class="bg-dark py-16 px-4">
-      <!-- Decorative divider -->
+    <div class="bg-dark py-16 px-4 relative">
+      <!-- Chuck watermark -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.02]">
+        <img src="${CHUCK_AVATAR}" class="absolute bottom-[10%] right-[5%] w-64" alt="" />
+      </div>
+
+      <!-- Decorative divider with Chuck -->
       <div class="flex items-center justify-center gap-4 mb-12">
         <span class="text-gold text-2xl">★</span>
         <div class="h-px w-24 bg-leather"></div>
-        <span class="text-gold text-3xl">★</span>
+        <img src="${CHUCK_AVATAR}" class="w-10 h-10 rounded-full border-2 border-gold" alt="" />
         <div class="h-px w-24 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>
 
-      <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-12 tracking-wider"
+      <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-4 tracking-wider"
           style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
         Moments Iconiques
       </h2>
+      <p class="text-center text-wheat/50 font-body text-sm mb-12 italic">
+        Les scènes que même Chuck Norris regarde en boucle
+      </p>
 
       <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         ${cardsHTML}
       </div>
 
-      <!-- Decorative bottom divider -->
+      <!-- Bottom with Chuck army -->
       <div class="flex items-center justify-center gap-4 mt-16">
         <span class="text-gold text-2xl">★</span>
-        <div class="h-px w-24 bg-leather"></div>
-        <span class="text-gold text-3xl">★</span>
-        <div class="h-px w-24 bg-leather"></div>
+        <div class="h-px w-16 bg-leather"></div>
+        <img src="${CHUCK_AVATAR}" class="w-7 h-7 rounded-full opacity-40" alt="" />
+        <img src="${CHUCK_AVATAR}" class="w-9 h-9 rounded-full opacity-60 border border-gold" alt="" />
+        <img src="${CHUCK_AVATAR}" class="w-7 h-7 rounded-full opacity-40" alt="" />
+        <div class="h-px w-16 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>
     </div>

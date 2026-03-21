@@ -1,5 +1,7 @@
 import { timeline, bio } from '../memorial';
 
+const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+
 export function renderMemorial(): void {
   const section = document.getElementById('memorial');
   if (!section) return;
@@ -18,7 +20,7 @@ export function renderMemorial(): void {
 
         <!-- Center dot (desktop only) -->
         <div class="hidden md:flex items-center justify-center absolute left-1/2 -translate-x-1/2 z-10">
-          <div class="w-4 h-4 bg-gold rounded-full border-2 border-leather shadow-md"></div>
+          <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full border-2 border-gold shadow-md" alt="" />
         </div>
 
         <!-- Content card -->
@@ -39,7 +41,7 @@ export function renderMemorial(): void {
       <div class="flex items-center justify-center gap-4 mb-12">
         <span class="text-gold text-2xl">★</span>
         <div class="h-px w-24 bg-leather"></div>
-        <span class="text-gold text-3xl">★</span>
+        <img src="${CHUCK_AVATAR}" class="w-10 h-10 rounded-full border-2 border-gold" alt="" />
         <div class="h-px w-24 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>
@@ -54,9 +56,21 @@ export function renderMemorial(): void {
         La Légende Éternelle
       </p>
 
-      <!-- Bio -->
-      <div class="max-w-3xl mx-auto mb-20">
-        <div class="bg-wood/20 border border-leather rounded-xl p-6 md:p-10 shadow-xl relative">
+      <!-- Chuck portrait + Bio -->
+      <div class="max-w-4xl mx-auto mb-20 flex flex-col md:flex-row items-center gap-8">
+        <!-- Large Chuck portrait -->
+        <div class="flex-shrink-0 relative">
+          <div class="absolute inset-0 rounded-full bg-gold/15 blur-xl scale-110"></div>
+          <img src="${CHUCK_AVATAR}" alt="Chuck Norris"
+               class="relative w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-gold shadow-2xl"
+               style="box-shadow: 0 0 40px rgba(218,165,32,0.3);" />
+          <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-brick text-wheat font-western text-xs px-4 py-1 rounded-full whitespace-nowrap">
+            10 Mars 1940 — 19 Mars 2026
+          </div>
+        </div>
+
+        <!-- Bio card -->
+        <div class="bg-wood/20 border border-leather rounded-xl p-6 md:p-10 shadow-xl relative flex-1">
           <span class="absolute -top-4 left-6 text-gold text-5xl font-western leading-none">"</span>
           <p class="font-body text-wheat text-base md:text-lg leading-relaxed italic pt-4">
             ${bio}
@@ -68,7 +82,9 @@ export function renderMemorial(): void {
       <!-- Decorative divider -->
       <div class="flex items-center justify-center gap-3 mb-16">
         <div class="h-px w-16 bg-leather"></div>
+        <img src="${CHUCK_AVATAR}" class="w-6 h-6 rounded-full opacity-50" alt="" />
         <span class="text-gold text-xl">★</span>
+        <img src="${CHUCK_AVATAR}" class="w-6 h-6 rounded-full opacity-50" alt="" />
         <div class="h-px w-16 bg-leather"></div>
       </div>
 
@@ -84,13 +100,17 @@ export function renderMemorial(): void {
         </div>
       </div>
 
-      <!-- Decorative bottom divider -->
-      <div class="flex items-center justify-center gap-4 mt-20">
-        <span class="text-gold text-2xl">★</span>
-        <div class="h-px w-24 bg-leather"></div>
-        <span class="text-gold text-3xl">★</span>
-        <div class="h-px w-24 bg-leather"></div>
-        <span class="text-gold text-2xl">★</span>
+      <!-- Bottom tribute -->
+      <div class="flex flex-col items-center gap-4 mt-20">
+        <img src="${CHUCK_AVATAR}" class="w-16 h-16 rounded-full border-2 border-gold opacity-60" alt="" />
+        <p class="font-western text-gold/60 text-lg tracking-widest">REST IN POWER</p>
+        <div class="flex items-center gap-4">
+          <span class="text-gold text-2xl">★</span>
+          <div class="h-px w-24 bg-leather"></div>
+          <span class="text-gold text-3xl">★</span>
+          <div class="h-px w-24 bg-leather"></div>
+          <span class="text-gold text-2xl">★</span>
+        </div>
       </div>
     </div>
   `;
