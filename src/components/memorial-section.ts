@@ -28,7 +28,7 @@ export function renderMemorial(): void {
                    flex ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-row gap-4 md:gap-8 relative">
         <!-- Year badge -->
         <div class="flex-shrink-0 flex ${i % 2 === 0 ? 'md:justify-end' : 'md:justify-start'} justify-start md:w-[calc(50%-1.5rem)] w-auto">
-          <span class="inline-block bg-gold text-dark font-western text-sm md:text-base px-4 py-2 rounded-full font-bold whitespace-nowrap shadow-lg">
+          <span class="inline-block bg-gold text-dark font-western text-xs md:text-sm px-3 py-1.5 rounded-lg font-bold shadow-lg text-center leading-tight">
             ${event.year}
           </span>
         </div>
