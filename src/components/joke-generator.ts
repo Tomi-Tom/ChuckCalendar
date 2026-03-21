@@ -1,6 +1,5 @@
 import { fetchJoke, getRandomFallbackJoke } from "../jokes";
-
-const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+import { CHUCK_HERO, CHUCK_CARTOON } from '../chuck-images';
 
 export function renderJokeGenerator(): void {
   const section = document.getElementById("jokes");
@@ -10,28 +9,19 @@ export function renderJokeGenerator(): void {
 
   section.innerHTML = `
     <div class="relative py-20 px-4"
-         style="background: linear-gradient(180deg, #1a0f00 0%, #0d0800 30%, #1a0f00 100%);
-                background-image: radial-gradient(circle at 20% 50%, rgba(139,69,19,0.08) 0%, transparent 50%),
-                                  radial-gradient(circle at 80% 50%, rgba(139,69,19,0.08) 0%, transparent 50%);">
-
-      <!-- Floating Chuck heads background -->
-      <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03]">
-        <img src="${CHUCK_AVATAR}" class="absolute top-[10%] right-[5%] w-24 rotate-[12deg]" alt="" />
-        <img src="${CHUCK_AVATAR}" class="absolute bottom-[15%] left-[8%] w-20 rotate-[-10deg]" alt="" />
-        <img src="${CHUCK_AVATAR}" class="absolute top-[40%] right-[20%] w-16 rotate-[25deg]" alt="" />
-      </div>
+         style="background: linear-gradient(180deg, #1a0f00 0%, #0d0800 30%, #1a0f00 100%);">
 
       <!-- Decorative top divider -->
       <div class="flex items-center justify-center gap-4 mb-12">
         <span class="text-gold text-2xl">★</span>
         <div class="h-px w-24 bg-leather"></div>
-        <img src="${CHUCK_AVATAR}" class="w-10 h-10 rounded-full border-2 border-gold" alt="" />
+        <img src="${CHUCK_HERO}" class="w-10 h-10 rounded-full border-2 border-gold object-cover" alt="" />
         <div class="h-px w-24 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>
 
       <!-- Section title -->
-      <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-4 tracking-wider relative"
+      <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-4 tracking-wider"
           style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
         Le Générateur de Facts
       </h2>
@@ -42,10 +32,11 @@ export function renderJokeGenerator(): void {
       <!-- Chuck face + Button combo -->
       <div class="flex flex-col items-center mb-12">
         <div class="relative mb-6">
-          <img id="joke-chuck-face" src="${CHUCK_AVATAR}" alt="Chuck Norris"
-               class="w-28 h-28 md:w-36 md:h-36 rounded-full border-4 border-gold shadow-xl transition-transform duration-300"
+          <div class="absolute inset-0 rounded-full bg-gold/10 blur-xl scale-125"></div>
+          <img id="joke-chuck-face" src="${CHUCK_HERO}" alt="Chuck Norris"
+               class="relative w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-gold shadow-xl object-cover transition-transform duration-300"
                style="box-shadow: 0 0 30px rgba(218,165,32,0.3);" />
-          <div id="joke-chuck-speech" class="absolute -top-2 -right-2 bg-gold text-dark font-western text-lg w-10 h-10 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+          <div id="joke-chuck-speech" class="absolute -top-1 -right-1 bg-gold text-dark font-western text-base w-9 h-9 rounded-full flex items-center justify-center shadow-lg animate-bounce">
             💬
           </div>
         </div>
@@ -57,7 +48,7 @@ export function renderJokeGenerator(): void {
                        hover:scale-105 hover:brightness-110 hover:shadow-xl
                        active:scale-95 active:brightness-90
                        flex items-center gap-3">
-          <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full" alt="" />
+          <img src="${CHUCK_CARTOON}" class="w-8 h-8 rounded-full" alt="" />
           Chuck me a Fact!
         </button>
       </div>
@@ -65,8 +56,7 @@ export function renderJokeGenerator(): void {
       <!-- Joke card -->
       <div class="flex justify-center">
         <div class="max-w-2xl w-full bg-wood/50 border border-leather rounded-xl p-8 md:p-10 shadow-xl relative">
-          <!-- Chuck avatar in card corner -->
-          <img src="${CHUCK_AVATAR}" class="absolute -top-5 -left-5 w-12 h-12 rounded-full border-2 border-gold shadow-lg" alt="" />
+          <img src="${CHUCK_HERO}" class="absolute -top-5 -left-5 w-12 h-12 rounded-full border-2 border-gold shadow-lg object-cover" alt="" />
 
           <p id="joke-text"
              class="font-body text-wheat text-lg md:text-xl leading-relaxed text-center transition-opacity duration-300 ease-in-out">
@@ -83,7 +73,7 @@ export function renderJokeGenerator(): void {
       <div class="flex items-center justify-center gap-4 mt-16">
         <span class="text-gold text-2xl">★</span>
         <div class="h-px w-24 bg-leather"></div>
-        <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full border border-gold opacity-50" alt="" />
+        <img src="${CHUCK_CARTOON}" class="w-8 h-8 rounded-full border border-gold/50 opacity-50" alt="" />
         <div class="h-px w-24 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>
@@ -98,11 +88,8 @@ export function renderJokeGenerator(): void {
   btn.addEventListener("click", async () => {
     btn.setAttribute("disabled", "true");
     btn.classList.add("opacity-60", "cursor-wait");
+    chuckFace.classList.add("scale-110");
 
-    // Chuck reacts! Spin his face
-    chuckFace.classList.add("scale-110", "rotate-[5deg]");
-
-    // Fade out current joke and show loading
     jokeText.classList.add("opacity-0");
     setTimeout(() => {
       jokeText.classList.add("hidden");
@@ -111,18 +98,13 @@ export function renderJokeGenerator(): void {
 
     const joke = await fetchJoke();
 
-    // Hide loading, show new joke with fade in
     jokeLoading.classList.add("hidden");
     jokeText.textContent = joke;
     jokeText.classList.remove("hidden");
-
-    // Trigger reflow then fade in
     void jokeText.offsetWidth;
     jokeText.classList.remove("opacity-0");
 
-    // Chuck settles back down
-    chuckFace.classList.remove("scale-110", "rotate-[5deg]");
-
+    chuckFace.classList.remove("scale-110");
     btn.removeAttribute("disabled");
     btn.classList.remove("opacity-60", "cursor-wait");
   });

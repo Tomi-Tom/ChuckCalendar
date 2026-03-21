@@ -1,4 +1,4 @@
-const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+import { CHUCK_HERO } from '../chuck-images';
 
 const NAV_LINKS = [
   { label: 'Accueil', href: '#hero' },
@@ -19,7 +19,7 @@ export function renderNavbar(): void {
   nav.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <a href="#hero" class="flex items-center gap-2 group">
-        <img src="${CHUCK_AVATAR}" alt="Chuck" class="w-9 h-9 rounded-full border-2 border-gold group-hover:scale-110 transition-transform" />
+        <img src="${CHUCK_HERO}" alt="Chuck" class="w-9 h-9 rounded-full border-2 border-gold object-cover group-hover:scale-110 transition-transform" />
         <span class="font-western text-gold text-lg tracking-wide">CHUCK<span class="text-wheat">CALENDAR</span></span>
       </a>
 
@@ -34,7 +34,7 @@ export function renderNavbar(): void {
       <!-- Hamburger -->
       <button id="nav-toggle" class="md:hidden text-wheat hover:text-gold transition-colors cursor-pointer" aria-label="Menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
     </div>
@@ -48,7 +48,6 @@ export function renderNavbar(): void {
     </ul>
   `;
 
-  // Hamburger toggle
   const toggle = document.getElementById('nav-toggle');
   const mobile = document.getElementById('nav-mobile');
   toggle?.addEventListener('click', () => {
@@ -56,7 +55,6 @@ export function renderNavbar(): void {
     mobile?.classList.toggle('flex');
   });
 
-  // Close mobile menu on link click
   mobile?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => {
       mobile.classList.add('hidden');
@@ -64,7 +62,6 @@ export function renderNavbar(): void {
     });
   });
 
-  // Smooth scroll for all nav links
   nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
@@ -73,7 +70,6 @@ export function renderNavbar(): void {
     });
   });
 
-  // Active section highlighting with IntersectionObserver
   const sections = NAV_LINKS.map((l) =>
     document.querySelector(l.href)
   ).filter(Boolean) as Element[];

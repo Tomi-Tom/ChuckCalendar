@@ -1,6 +1,7 @@
 import { quotes } from '../quotes';
 
-const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+import { CHUCK_HERO, CHUCK_ACTION } from '../chuck-images';
+const CHUCK_AVATAR = CHUCK_HERO;
 
 export function renderQuotes(): void {
   const section = document.getElementById('quotes');
@@ -22,14 +23,14 @@ export function renderQuotes(): void {
     <div class="bg-dark py-20 px-4 relative">
       <!-- Chuck watermark -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03]">
-        <img src="${CHUCK_AVATAR}" class="absolute top-[30%] left-[50%] w-80 -translate-x-1/2" alt="" />
+        <img src="${CHUCK_ACTION}" class="absolute top-[20%] left-[50%] w-80 -translate-x-1/2 rounded-lg" alt="" />
       </div>
 
       <!-- Decorative top divider -->
       <div class="flex items-center justify-center gap-4 mb-12">
         <span class="text-gold text-2xl">★</span>
         <div class="h-px w-24 bg-leather"></div>
-        <img src="${CHUCK_AVATAR}" class="w-10 h-10 rounded-full border-2 border-gold" alt="" />
+        <img src="${CHUCK_AVATAR}" class="w-10 h-10 rounded-full border-2 border-gold object-cover" alt="" />
         <div class="h-px w-24 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>

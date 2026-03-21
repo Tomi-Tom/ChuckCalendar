@@ -1,6 +1,5 @@
 import { getTodayACN } from '../calendar';
-
-const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+import { CHUCK_HERO, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_CARTOON } from '../chuck-images';
 
 const QUOTES = [
   'Chuck Norris ne meurt pas. Il décide simplement de vivre ailleurs.',
@@ -22,7 +21,7 @@ function formatACNTime(): string {
 }
 
 function getTimeSinceDeath(): string {
-  const deathDate = new Date(2026, 2, 19); // March 19, 2026
+  const deathDate = new Date(2026, 2, 19);
   const now = new Date();
   const diff = now.getTime() - deathDate.getTime();
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -48,24 +47,22 @@ export function renderHero(): void {
       <!-- Dark overlay with vignette -->
       <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%);"></div>
 
-      <!-- Floating Chuck faces in background -->
-      <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04]">
-        <img src="${CHUCK_AVATAR}" class="absolute top-[5%] left-[5%] w-32 rotate-[-15deg]" alt="" />
-        <img src="${CHUCK_AVATAR}" class="absolute top-[15%] right-[10%] w-24 rotate-[20deg]" alt="" />
-        <img src="${CHUCK_AVATAR}" class="absolute bottom-[20%] left-[15%] w-20 rotate-[10deg]" alt="" />
-        <img src="${CHUCK_AVATAR}" class="absolute bottom-[10%] right-[5%] w-28 rotate-[-8deg]" alt="" />
-        <img src="${CHUCK_AVATAR}" class="absolute top-[50%] left-[50%] w-96 -translate-x-1/2 -translate-y-1/2" alt="" />
+      <!-- Floating real Chuck photos in background -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <img src="${CHUCK_YOUNG}" class="absolute top-[5%] left-[3%] w-32 md:w-44 rotate-[-12deg] rounded-lg opacity-[0.07] border border-gold/20" alt="" />
+        <img src="${CHUCK_ACTION}" class="absolute top-[10%] right-[3%] w-28 md:w-40 rotate-[8deg] rounded-lg opacity-[0.06] border border-gold/20" alt="" />
+        <img src="${CHUCK_CARTOON}" class="absolute bottom-[15%] left-[8%] w-24 rotate-[15deg] opacity-[0.05]" alt="" />
+        <img src="${CHUCK_CARTOON}" class="absolute bottom-[8%] right-[10%] w-20 rotate-[-20deg] opacity-[0.04]" alt="" />
       </div>
 
       <!-- Content -->
       <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
-        <!-- Chuck's portrait -->
+        <!-- Chuck's portrait — real photo -->
         <div class="mb-8 flex justify-center">
           <div class="relative">
-            <div class="absolute inset-0 rounded-full bg-gold/20 blur-2xl scale-125"></div>
-            <img src="${CHUCK_AVATAR}" alt="Chuck Norris"
-                 class="relative w-40 h-40 md:w-56 md:h-56 rounded-full border-4 border-gold shadow-2xl
-                        animate-[pulse_4s_ease-in-out_infinite]"
+            <div class="absolute inset-0 rounded-full bg-gold/20 blur-3xl scale-150"></div>
+            <img src="${CHUCK_HERO}" alt="Chuck Norris"
+                 class="relative w-44 h-44 md:w-60 md:h-60 rounded-full border-4 border-gold shadow-2xl object-cover"
                  style="box-shadow: 0 0 60px rgba(218,165,32,0.4), 0 0 120px rgba(218,165,32,0.2);" />
             <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-gold text-dark font-western text-xs px-3 py-1 rounded-full whitespace-nowrap">
               1940 — ∞
@@ -102,7 +99,7 @@ export function renderHero(): void {
 
         <!-- ACN date counter with live clock -->
         <div class="inline-flex items-center gap-3 bg-dark/60 border border-gold/40 rounded-full px-6 py-3 mb-10">
-          <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full" alt="" />
+          <img src="${CHUCK_HERO}" class="w-8 h-8 rounded-full object-cover border border-gold/50" alt="" />
           <p class="font-western text-gold text-lg md:text-2xl"
              style="text-shadow: 1px 2px 4px rgba(0,0,0,0.6);">
             ${dateDisplay}

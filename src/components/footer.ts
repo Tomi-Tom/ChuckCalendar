@@ -1,6 +1,5 @@
 import { getTodayACN } from '../calendar';
-
-const CHUCK_AVATAR = 'https://api.chucknorris.io/img/avatar/chuck-norris.png';
+import { CHUCK_MEMORIAL, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_HERO, CHUCK_MARINE } from '../chuck-images';
 
 export function renderFooter(): void {
   const main = document.querySelector('main');
@@ -15,8 +14,9 @@ export function renderFooter(): void {
 
     <!-- Chuck portrait -->
     <div class="flex justify-center mb-4">
-      <img src="${CHUCK_AVATAR}" alt="Chuck Norris"
-           class="w-20 h-20 rounded-full border-2 border-gold/50 opacity-70" />
+      <img src="${CHUCK_MEMORIAL}" alt="Chuck Norris"
+           class="w-24 h-24 rounded-full border-2 border-gold/50 opacity-80 object-cover"
+           style="box-shadow: 0 0 20px rgba(218,165,32,0.2);" />
     </div>
 
     <p class="text-lg font-western text-wheat/90 mb-2">★ À la mémoire éternelle de Chuck Norris ★</p>
@@ -24,17 +24,17 @@ export function renderFooter(): void {
     <p class="mb-3">Calendrier ACN — Ère Après Chuck Norris</p>
     <p class="text-sm text-wheat/50 mb-4">${today.day} ${today.monthName} An ${today.year} ACN</p>
 
-    <p class="text-xs text-wheat/30 italic">
+    <p class="text-xs text-wheat/30 italic mb-6">
       « Chuck Norris n'a pas besoin d'un site web. Le site web a besoin de Chuck Norris. »
     </p>
 
-    <!-- Tiny Chuck army -->
-    <div class="flex justify-center gap-2 mt-6 opacity-30">
-      <img src="${CHUCK_AVATAR}" class="w-6 h-6 rounded-full" alt="" />
-      <img src="${CHUCK_AVATAR}" class="w-6 h-6 rounded-full" alt="" />
-      <img src="${CHUCK_AVATAR}" class="w-6 h-6 rounded-full" alt="" />
-      <img src="${CHUCK_AVATAR}" class="w-6 h-6 rounded-full" alt="" />
-      <img src="${CHUCK_AVATAR}" class="w-6 h-6 rounded-full" alt="" />
+    <!-- Chuck through the ages -->
+    <div class="flex justify-center gap-3 opacity-50">
+      <img src="${CHUCK_YOUNG}" class="w-8 h-8 rounded-full object-cover border border-gold/30" alt="1976" title="1976" />
+      <img src="${CHUCK_MARINE}" class="w-8 h-8 rounded-full object-cover border border-gold/30" alt="Marine" title="Marine" />
+      <img src="${CHUCK_ACTION}" class="w-8 h-8 rounded-full object-cover border border-gold/30" alt="Action" title="Delta Force" />
+      <img src="${CHUCK_HERO}" class="w-8 h-8 rounded-full object-cover border border-gold/30" alt="2006" title="2006" />
+      <img src="${CHUCK_MEMORIAL}" class="w-8 h-8 rounded-full object-cover border border-gold/30" alt="2015" title="2015" />
     </div>
   `;
 
