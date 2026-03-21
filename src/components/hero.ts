@@ -111,10 +111,13 @@ export function renderHero(): void {
         </div>
 
         <!-- Rotating quote -->
-        <blockquote id="hero-quote"
-                    class="font-body italic text-wheat/90 text-lg md:text-xl max-w-2xl mx-auto transition-opacity duration-700 opacity-100">
-          "${QUOTES[0]}"
-        </blockquote>
+        <div class="max-w-2xl mx-auto h-16 md:h-12 flex items-center justify-center">
+          <blockquote id="hero-quote"
+                      class="font-body italic text-wheat/90 text-lg md:text-xl text-center"
+                      style="opacity: 1; transition: opacity 0.6s ease-in-out;">
+            "${QUOTES[0]}"
+          </blockquote>
+        </div>
 
         <!-- Scroll indicator -->
         <div class="mt-12 animate-bounce text-gold/60 text-3xl">▼</div>
@@ -136,14 +139,18 @@ export function renderHero(): void {
   if (!quoteEl) return;
 
   setInterval(() => {
-    quoteEl.classList.remove('opacity-100');
-    quoteEl.classList.add('opacity-0');
+    // Fade out
+    quoteEl.style.opacity = '0';
 
-    setTimeout(() => {
+    // Wait for fade-out to finish, then swap text and fade in
+    const onFadeOut = () => {
+      quoteEl.removeEventListener('transitionend', onFadeOut);
       currentIndex = (currentIndex + 1) % QUOTES.length;
       quoteEl.textContent = `"${QUOTES[currentIndex]}"`;
-      quoteEl.classList.remove('opacity-0');
-      quoteEl.classList.add('opacity-100');
-    }, 700);
+      // Force reflow before fading in
+      void quoteEl.offsetWidth;
+      quoteEl.style.opacity = '1';
+    };
+    quoteEl.addEventListener('transitionend', onFadeOut, { once: true });
   }, 5000);
 }
