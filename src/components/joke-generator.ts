@@ -59,7 +59,8 @@ export function renderJokeGenerator(): void {
           <img src="${CHUCK_HERO}" class="absolute -top-5 -left-5 w-12 h-12 rounded-full border-2 border-gold shadow-lg object-cover" alt="" />
 
           <p id="joke-text"
-             class="font-body text-wheat text-lg md:text-xl leading-relaxed text-center transition-opacity duration-300 ease-in-out">
+             class="font-body text-wheat text-lg md:text-xl leading-relaxed text-center"
+             style="transition: opacity 0.3s ease-in-out;"
             ${initialJoke}
           </p>
           <p id="joke-loading"
@@ -85,27 +86,41 @@ export function renderJokeGenerator(): void {
   const jokeLoading = document.getElementById("joke-loading")!;
   const chuckFace = document.getElementById("joke-chuck-face")!;
 
+  let isFetching = false;
+
   btn.addEventListener("click", async () => {
+    if (isFetching) return;
+    isFetching = true;
+
     btn.setAttribute("disabled", "true");
     btn.classList.add("opacity-60", "cursor-wait");
     chuckFace.classList.add("scale-110");
 
-    jokeText.classList.add("opacity-0");
-    setTimeout(() => {
-      jokeText.classList.add("hidden");
-      jokeLoading.classList.remove("hidden");
-    }, 300);
+    // 1. Fade out current joke
+    jokeText.style.opacity = "0";
 
-    const joke = await fetchJoke();
+    // 2. Start fetch in parallel
+    const jokePromise = fetchJoke();
 
+    // 3. Wait for fade-out to finish, then show loading
+    await new Promise(resolve => setTimeout(resolve, 300));
+    jokeText.classList.add("hidden");
+    jokeLoading.classList.remove("hidden");
+
+    // 4. Wait for joke
+    const joke = await jokePromise;
+
+    // 5. Swap: hide loading, set new text, fade in
     jokeLoading.classList.add("hidden");
     jokeText.textContent = joke;
     jokeText.classList.remove("hidden");
+    jokeText.style.opacity = "0";
     void jokeText.offsetWidth;
-    jokeText.classList.remove("opacity-0");
+    jokeText.style.opacity = "1";
 
     chuckFace.classList.remove("scale-110");
     btn.removeAttribute("disabled");
     btn.classList.remove("opacity-60", "cursor-wait");
+    isFetching = false;
   });
 }

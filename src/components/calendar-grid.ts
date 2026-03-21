@@ -2,7 +2,6 @@ import {
   ACN_MONTH_NAMES,
   getTodayACN,
   getMonthDays,
-  getChuckDaysCount,
 } from '../calendar';
 
 import { CHUCK_AVATAR } from '../chuck-images';
@@ -33,8 +32,6 @@ function render(
   container: HTMLElement,
   today: ReturnType<typeof getTodayACN>
 ): void {
-  const chuckDaysCount = getChuckDaysCount(currentYear);
-
   // Build months HTML
   let monthsHTML = '';
   for (let m = 1; m <= 13; m++) {
@@ -70,23 +67,6 @@ function render(
           ${daysGridHTML}
         </div>
       </div>`;
-  }
-
-  // Chuck days section
-  let chuckDaysHTML = '';
-  for (let cd = 1; cd <= chuckDaysCount; cd++) {
-    const isToday =
-      today.isChuckDay &&
-      today.year === currentYear &&
-      today.chuckDayNumber === cd;
-
-    const todayClasses = isToday ? 'ring-2 ring-gold bg-gold/20' : '';
-
-    chuckDaysHTML += `
-      <button
-        class="inline-flex items-center justify-center w-12 h-12 rounded-lg text-lg font-western text-gold border border-gold/50 cursor-pointer hover:bg-gold/20 transition-colors ${todayClasses}"
-        data-year="${currentYear}" data-month="0" data-day="${cd}"
-      >${cd}</button>`;
   }
 
   container.innerHTML = `
@@ -125,19 +105,6 @@ function render(
           ${monthsHTML}
         </div>
 
-        <!-- Jour(s) de Chuck -->
-        <div class="bg-dark/80 border-2 border-gold/50 rounded-lg p-6 text-center max-w-md mx-auto">
-          <img src="${CHUCK_AVATAR}" class="w-14 h-14 rounded-full border-2 border-gold mx-auto mb-3 object-cover" alt="" />
-          <h3 class="font-western text-gold text-xl mb-4">
-            Jour${chuckDaysCount > 1 ? 's' : ''} de Chuck
-          </h3>
-          <div class="flex items-center justify-center gap-4">
-            ${chuckDaysHTML}
-          </div>
-          <p class="text-wheat/60 text-sm mt-3 font-body italic">
-            ${chuckDaysCount} jour${chuckDaysCount > 1 ? 's' : ''} sacré${chuckDaysCount > 1 ? 's' : ''} hors du temps
-          </p>
-        </div>
       </div>
     </div>
 
