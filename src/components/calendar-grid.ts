@@ -182,10 +182,10 @@ async function showJoke(): Promise<void> {
   jokeText.textContent = 'Chargement...';
 
   try {
-    const res = await fetch('https://api.chucknorris.io/jokes/random');
+    const res = await fetch('https://chuckfacts.xyz/api/rand');
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
-    jokeText.textContent = data.value;
+    jokeText.textContent = data.joke;
   } catch {
     const fallback =
       FALLBACK_JOKES[Math.floor(Math.random() * FALLBACK_JOKES.length)];

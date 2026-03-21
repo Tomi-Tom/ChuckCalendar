@@ -35,13 +35,18 @@ export function getRandomFallbackJoke(): string {
   return fallbackJokes[Math.floor(Math.random() * fallbackJokes.length)];
 }
 
+/**
+ * Fetch a Chuck Norris fact in French.
+ * Primary: chuckfacts.xyz (French API)
+ * Fallback: hardcoded French jokes
+ */
 export async function fetchJoke(): Promise<string> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     const response = await fetch(
-      "https://api.chucknorris.io/jokes/random",
+      "https://chuckfacts.xyz/api/rand",
       { signal: controller.signal }
     );
 
@@ -52,7 +57,7 @@ export async function fetchJoke(): Promise<string> {
     }
 
     const data = await response.json();
-    return data.value;
+    return data.joke;
   } catch {
     return getRandomFallbackJoke();
   }
