@@ -43,7 +43,7 @@ export function renderJokeGenerator(): void {
       <div class="flex justify-center">
         <div class="max-w-2xl w-full bg-wood/50 border border-leather rounded-xl p-8 md:p-10 shadow-xl">
           <p id="joke-text"
-             class="font-body text-wheat text-lg md:text-xl leading-relaxed text-center transition-opacity duration-400 ease-in-out">
+             class="font-body text-wheat text-lg md:text-xl leading-relaxed text-center transition-opacity duration-300 ease-in-out">
             ${initialJoke}
           </p>
           <p id="joke-loading"

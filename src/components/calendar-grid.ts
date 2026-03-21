@@ -138,7 +138,7 @@ function render(
           &times;
         </button>
         <p class="text-gold font-western text-xl mb-4">★</p>
-        <p id="joke-text" class="font-body text-wheat text-lg leading-relaxed"></p>
+        <p id="calendar-joke-text" class="font-body text-wheat text-lg leading-relaxed"></p>
       </div>
     </div>
   `;
@@ -195,7 +195,7 @@ function bindEvents(
 
 async function showJoke(): Promise<void> {
   const modal = document.getElementById('joke-modal');
-  const jokeText = document.getElementById('joke-text');
+  const jokeText = document.getElementById('calendar-joke-text');
   if (!modal || !jokeText) return;
 
   // Show modal with loading

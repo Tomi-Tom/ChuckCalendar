@@ -2,7 +2,7 @@
  * ACN (Après Chuck Norris) Calendar System
  *
  * A custom 13-month lunar calendar where:
- * - Epoch: March 20, 2025 (the day after Chuck Norris' symbolic passing)
+ * - Epoch: March 20, 2026 (the day after Chuck Norris' passing on March 19, 2026)
  * - 13 months of 28 days each = 364 days per year
  * - Plus 1-2 "Jour(s) de Chuck" sacred days between years
  */
@@ -16,8 +16,8 @@ export interface ACNDate {
   chuckDayNumber?: number;
 }
 
-/** March 20, 2025 — Day 1 of Year 1 ACN */
-const ACN_EPOCH = new Date(2025, 2, 20); // Month is 0-indexed: 2 = March
+/** March 20, 2026 — Day 1 of Year 1 ACN */
+const ACN_EPOCH = new Date(2026, 2, 20); // Month is 0-indexed: 2 = March
 
 export const ACN_MONTH_NAMES: string[] = [
   'Norrisendre',

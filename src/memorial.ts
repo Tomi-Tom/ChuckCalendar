@@ -61,9 +61,9 @@ export const timeline: TimelineEvent[] = [
     description: '"The Expendables 2" — retour épique au cinéma. Même parmi les plus durs, Chuck Norris reste au-dessus.',
   },
   {
-    year: '2025 (An 1 ACN)',
+    year: '2026 (An 1 ACN)',
     title: 'L\'Ère Chuck Norris commence',
-    description: 'L\'ère Chuck Norris commence — il ne meurt pas, il transcende. Le calendrier se réinitialise en son honneur.',
+    description: 'Le 19 mars 2026, Chuck Norris décide de transcender. Le lendemain, l\'ère ACN commence — le calendrier se réinitialise en son honneur.',
   },
 ];
 
