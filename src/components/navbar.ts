@@ -1,4 +1,4 @@
-import { CHUCK_HERO } from '../chuck-images';
+import { CHUCK_AVATAR } from '../chuck-images';
 
 const NAV_LINKS = [
   { label: 'Accueil', href: '#hero' },
@@ -19,7 +19,7 @@ export function renderNavbar(): void {
   nav.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <a href="#hero" class="flex items-center gap-2 group">
-        <img src="${CHUCK_HERO}" alt="Chuck" class="w-9 h-9 rounded-full border-2 border-gold object-cover group-hover:scale-110 transition-transform" />
+        <img src="${CHUCK_AVATAR}" alt="Chuck" class="w-9 h-9 rounded-full border-2 border-gold object-cover group-hover:scale-110 transition-transform" />
         <span class="font-western text-gold text-lg tracking-wide">CHUCK<span class="text-wheat">CALENDAR</span></span>
       </a>
 

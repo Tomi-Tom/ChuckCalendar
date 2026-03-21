@@ -1,5 +1,5 @@
 import { fetchJoke, getRandomFallbackJoke } from "../jokes";
-import { CHUCK_HERO, CHUCK_CARTOON } from '../chuck-images';
+import { CHUCK_HERO, CHUCK_AVATAR } from '../chuck-images';
 
 export function renderJokeGenerator(): void {
   const section = document.getElementById("jokes");
@@ -48,7 +48,7 @@ export function renderJokeGenerator(): void {
                        hover:scale-105 hover:brightness-110 hover:shadow-xl
                        active:scale-95 active:brightness-90
                        flex items-center gap-3">
-          <img src="${CHUCK_CARTOON}" class="w-8 h-8 rounded-full" alt="" />
+          <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full" alt="" />
           Chuck me a Fact!
         </button>
       </div>
@@ -73,7 +73,7 @@ export function renderJokeGenerator(): void {
       <div class="flex items-center justify-center gap-4 mt-16">
         <span class="text-gold text-2xl">★</span>
         <div class="h-px w-24 bg-leather"></div>
-        <img src="${CHUCK_CARTOON}" class="w-8 h-8 rounded-full border border-gold/50 opacity-50" alt="" />
+        <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full border border-gold/50 opacity-50" alt="" />
         <div class="h-px w-24 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>

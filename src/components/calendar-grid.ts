@@ -5,9 +5,9 @@ import {
   getChuckDaysCount,
 } from '../calendar';
 
+import { CHUCK_AVATAR } from '../chuck-images';
+
 const DAY_HEADERS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-import { CHUCK_HERO } from '../chuck-images';
-const CHUCK_AVATAR = CHUCK_HERO;
 
 const FALLBACK_JOKES = [
   'Chuck Norris peut diviser par zéro.',

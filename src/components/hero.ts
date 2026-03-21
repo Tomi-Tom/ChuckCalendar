@@ -1,5 +1,5 @@
 import { getTodayACN } from '../calendar';
-import { CHUCK_HERO, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_CARTOON } from '../chuck-images';
+import { CHUCK_HERO, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_AVATAR, CHUCK_SIGNING } from '../chuck-images';
 
 const QUOTES = [
   'Chuck Norris ne meurt pas. Il décide simplement de vivre ailleurs.',
@@ -51,8 +51,8 @@ export function renderHero(): void {
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <img src="${CHUCK_YOUNG}" class="absolute top-[5%] left-[3%] w-32 md:w-44 rotate-[-12deg] rounded-lg opacity-[0.07] border border-gold/20" alt="" />
         <img src="${CHUCK_ACTION}" class="absolute top-[10%] right-[3%] w-28 md:w-40 rotate-[8deg] rounded-lg opacity-[0.06] border border-gold/20" alt="" />
-        <img src="${CHUCK_CARTOON}" class="absolute bottom-[15%] left-[8%] w-24 rotate-[15deg] opacity-[0.05]" alt="" />
-        <img src="${CHUCK_CARTOON}" class="absolute bottom-[8%] right-[10%] w-20 rotate-[-20deg] opacity-[0.04]" alt="" />
+        <img src="${CHUCK_SIGNING}" class="absolute bottom-[15%] left-[8%] w-24 rotate-[15deg] opacity-[0.05]" alt="" />
+        <img src="${CHUCK_SIGNING}" class="absolute bottom-[8%] right-[10%] w-20 rotate-[-20deg] opacity-[0.04]" alt="" />
       </div>
 
       <!-- Content -->
@@ -99,7 +99,7 @@ export function renderHero(): void {
 
         <!-- ACN date counter with live clock -->
         <div class="inline-flex items-center gap-3 bg-dark/60 border border-gold/40 rounded-full px-6 py-3 mb-10">
-          <img src="${CHUCK_HERO}" class="w-8 h-8 rounded-full object-cover border border-gold/50" alt="" />
+          <img src="${CHUCK_AVATAR}" class="w-8 h-8 rounded-full object-cover border border-gold/50" alt="" />
           <p class="font-western text-gold text-lg md:text-2xl"
              style="text-shadow: 1px 2px 4px rgba(0,0,0,0.6);">
             ${dateDisplay}

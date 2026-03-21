@@ -1,7 +1,6 @@
 import { quotes } from '../quotes';
 
-import { CHUCK_HERO, CHUCK_ACTION } from '../chuck-images';
-const CHUCK_AVATAR = CHUCK_HERO;
+import { CHUCK_AVATAR, CHUCK_ACTION } from '../chuck-images';
 
 export function renderQuotes(): void {
   const section = document.getElementById('quotes');

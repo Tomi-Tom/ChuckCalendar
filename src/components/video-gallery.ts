@@ -1,5 +1,5 @@
 import { videos } from '../videos';
-import { CHUCK_HERO, CHUCK_ACTION, CHUCK_CARTOON } from '../chuck-images';
+import { CHUCK_HERO, CHUCK_ACTION, CHUCK_AVATAR } from '../chuck-images';
 
 export function renderVideos(): void {
   const section = document.getElementById('videos');
@@ -62,9 +62,9 @@ export function renderVideos(): void {
       <div class="flex items-center justify-center gap-4 mt-16">
         <span class="text-gold text-2xl">★</span>
         <div class="h-px w-16 bg-leather"></div>
-        <img src="${CHUCK_CARTOON}" class="w-7 h-7 rounded-full opacity-40" alt="" />
+        <img src="${CHUCK_AVATAR}" class="w-7 h-7 rounded-full opacity-40" alt="" />
         <img src="${CHUCK_HERO}" class="w-9 h-9 rounded-full opacity-60 border border-gold object-cover" alt="" />
-        <img src="${CHUCK_CARTOON}" class="w-7 h-7 rounded-full opacity-40" alt="" />
+        <img src="${CHUCK_AVATAR}" class="w-7 h-7 rounded-full opacity-40" alt="" />
         <div class="h-px w-16 bg-leather"></div>
         <span class="text-gold text-2xl">★</span>
       </div>
