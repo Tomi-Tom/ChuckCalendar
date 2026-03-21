@@ -1,5 +1,5 @@
 import { timeline, bio } from '../memorial';
-import { CHUCK_MEMORIAL, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_MARINE, CHUCK_2007, CHUCK_2016, CHUCK_HERO } from '../chuck-images';
+import { CHUCK_MEMORIAL, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_MARINE, CHUCK_2007, CHUCK_2016, CHUCK_HERO, CHUCK_AVATAR } from '../chuck-images';
 
 // Map timeline events to appropriate photos
 const TIMELINE_PHOTOS: Record<number, string> = {
@@ -74,13 +74,13 @@ export function renderMemorial(): void {
       <!-- Chuck portrait gallery + Bio -->
       <div class="max-w-5xl mx-auto mb-20">
         <!-- Photo gallery row -->
-        <div class="flex justify-center gap-4 mb-8 flex-wrap">
-          <img src="${CHUCK_YOUNG}" alt="Chuck Norris jeune"
+        <div class="flex justify-center gap-4 mb-8 flex-wrap items-end">
+          <img src="${CHUCK_AVATAR}" alt="Chuck Norris portrait"
                class="w-32 h-40 md:w-40 md:h-52 rounded-lg border-2 border-gold/50 shadow-xl object-cover rotate-[-3deg] hover:rotate-0 hover:scale-105 transition-all duration-300" />
-          <img src="${CHUCK_MEMORIAL}" alt="Chuck Norris"
+          <img src="${CHUCK_HERO}" alt="Chuck Norris Walker Texas Ranger"
                class="w-36 h-44 md:w-48 md:h-60 rounded-lg border-2 border-gold shadow-xl object-cover z-10 hover:scale-105 transition-all duration-300"
                style="box-shadow: 0 0 40px rgba(218,165,32,0.3);" />
-          <img src="${CHUCK_ACTION}" alt="Chuck Norris Delta Force"
+          <img src="${CHUCK_ACTION}" alt="Chuck Norris action"
                class="w-32 h-40 md:w-40 md:h-52 rounded-lg border-2 border-gold/50 shadow-xl object-cover rotate-[3deg] hover:rotate-0 hover:scale-105 transition-all duration-300" />
         </div>
 

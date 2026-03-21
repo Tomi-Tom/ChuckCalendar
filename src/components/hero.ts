@@ -1,5 +1,5 @@
 import { getTodayACN } from '../calendar';
-import { CHUCK_HERO, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_AVATAR, CHUCK_SIGNING } from '../chuck-images';
+import { CHUCK_HERO, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_AVATAR, CHUCK_MEMORIAL } from '../chuck-images';
 
 const QUOTES = [
   'Chuck Norris ne meurt pas. Il décide simplement de vivre ailleurs.',
@@ -51,8 +51,8 @@ export function renderHero(): void {
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <img src="${CHUCK_YOUNG}" class="absolute top-[5%] left-[3%] w-32 md:w-44 rotate-[-12deg] rounded-lg opacity-[0.07] border border-gold/20" alt="" />
         <img src="${CHUCK_ACTION}" class="absolute top-[10%] right-[3%] w-28 md:w-40 rotate-[8deg] rounded-lg opacity-[0.06] border border-gold/20" alt="" />
-        <img src="${CHUCK_SIGNING}" class="absolute bottom-[15%] left-[8%] w-24 rotate-[15deg] opacity-[0.05]" alt="" />
-        <img src="${CHUCK_SIGNING}" class="absolute bottom-[8%] right-[10%] w-20 rotate-[-20deg] opacity-[0.04]" alt="" />
+        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[15%] left-[8%] w-24 rotate-[15deg] opacity-[0.05]" alt="" />
+        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[8%] right-[10%] w-20 rotate-[-20deg] opacity-[0.04]" alt="" />
       </div>
 
       <!-- Content -->
