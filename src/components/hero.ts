@@ -1,5 +1,5 @@
 import { getTodayACN } from '../calendar';
-import { CHUCK_HERO } from '../chuck-images';
+import { CHUCK_HERO, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_MEMORIAL } from '../chuck-images';
 
 const QUOTES = [
   { text: 'Chuck Norris ne meurt pas. Il décide simplement de vivre ailleurs.', source: '' },
@@ -46,6 +46,14 @@ export function renderHero(): void {
   hero.innerHTML = `
     <div class="film-grain relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
          style="background: linear-gradient(180deg, #0a0500 0%, #1a0f00 40%, #2a1a08 100%);">
+
+      <!-- Floating background photos -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <img src="${CHUCK_YOUNG}" class="absolute top-[5%] left-[3%] w-32 md:w-44 rotate-[-12deg] rounded-lg opacity-[0.07] border border-gold/20" alt="" />
+        <img src="${CHUCK_ACTION}" class="absolute top-[10%] right-[3%] w-28 md:w-40 rotate-[8deg] rounded-lg opacity-[0.06] border border-gold/20" alt="" />
+        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[15%] left-[8%] w-24 rotate-[15deg] opacity-[0.05]" alt="" />
+        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[8%] right-[10%] w-20 rotate-[-20deg] opacity-[0.04]" alt="" />
+      </div>
 
       <!-- Production banner -->
       <div class="absolute top-0 left-0 right-0 text-center py-3 text-wheat/50 text-[0.65rem] tracking-[0.3em] uppercase border-b border-gold/20 z-10">

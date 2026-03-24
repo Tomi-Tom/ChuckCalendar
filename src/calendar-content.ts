@@ -10,13 +10,13 @@ export const calendarContent: Record<string, CalendarEntry> = {
   // === Jour(s) de Chuck (0-1, 0-2) ===
   '0-1': {
     type: 'anecdote',
-    text: 'Le calendrier de l\'Association Chuckienne Normande (ACN) est le seul calendrier au monde à comporter 13 mois de 28 jours, plus un ou deux jours spéciaux dédiés à Chuck Norris. Ce jour, le premier Jour de Chuck, célèbre l\'homme, la légende, le mythe. Chaque année, les membres de l\'ACN se réunissent pour honorer celui qui a redéfini les lois de la physique.',
-    source: 'Tradition du calendrier ACN',
+    text: 'Le calendrier ACN (Après Chuck Norris) est le seul calendrier au monde à comporter 13 mois de 28 jours, plus un ou deux jours spéciaux dédiés à Chuck Norris. Ce jour, le premier Jour de Chuck, célèbre l\'homme, la légende, le mythe. L\'ère ACN débute le 20 mars 2026, lendemain du départ de Chuck Norris pour des cieux qu\'il a lui-même créés.',
+    source: 'Tradition du calendrier ACN (Après Chuck Norris)',
   },
   '0-2': {
     type: 'anecdote',
     text: 'Le deuxième Jour de Chuck n\'apparaît que les années bissextiles, car même le temps a besoin d\'un jour supplémentaire pour rendre hommage à Chuck Norris. Ce jour est consacré à la méditation sur les exploits les plus invraisemblables de Chuck, et à la récitation collective de faits chuckiens. Les historiens estiment que ce jour supplémentaire a été ajouté au calendrier grégorien sur demande personnelle de Chuck Norris.',
-    source: 'Tradition du calendrier ACN – années bissextiles',
+    source: 'Tradition du calendrier ACN (Après Chuck Norris) – années bissextiles',
   },
 
   // === Mois 1 ===

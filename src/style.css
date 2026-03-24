@@ -49,10 +49,7 @@ a {
   transform: translateY(0);
 }
 
-/* ── Section dividers ── */
-main > section + section {
-  border-top: 1px solid var(--color-leather);
-}
+/* Section dividers removed — custom separators handle transitions */
 
 /* ── Custom scrollbar ── */
 ::-webkit-scrollbar {
