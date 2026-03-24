@@ -8,12 +8,13 @@ Redesign du site ChuckCalendar : amélioration UI/UX globale et diversification 
 
 Le site passe de 6 sections + footer à 5 sections + footer :
 
-1. **Ouverture** (Hero) — intro cinématique
-2. **Le Calendrier Sacré** — grille ACN interactive avec contenu diversifié
-3. **La Légende** — timeline mémorial
-4. **Ses Paroles & Exploits** — carousel citations + générateur de facts fusionnés
-5. **En Action** — galerie vidéo
-6. **Hommage** (Footer)
+1. **Ouverture** (`id="hero"`) — intro cinématique
+2. **Le Calendrier Sacré** (`id="calendar"`) — grille ACN interactive avec contenu diversifié
+3. **La Légende** (`id="memorial"`) — timeline mémorial
+4. **Ses Paroles & Exploits** (`id="paroles"`) — carousel citations + générateur de facts fusionnés
+5. **En Action** (`id="videos"`) — galerie vidéo
+
+**Footer** : Hommage (pas une section navigable)
 
 Les sections actuelles "Générateur de facts" et "Carousel de citations" sont fusionnées en une seule section "Ses Paroles & Exploits".
 
@@ -65,7 +66,10 @@ interface CalendarEntry {
 }
 
 // Indexé par "mois-jour" (ex: "1-15" = 15 Norrisendre)
+// Jour(s) de Chuck : clé "0-1" et "0-2"
 const calendarContent: Record<string, CalendarEntry> = {
+  "0-1": { type: "anecdote", text: "Le Jour de Chuck...", source: "Tradition ACN" },
+  "0-2": { type: "anecdote", text: "Le Second Jour de Chuck...", source: "Tradition ACN (années bissextiles)" },
   "1-1": { type: "fact", text: "Chuck Norris peut diviser par zéro..." },
   "1-2": { type: "citation", text: "Je ne recule jamais...", source: "Missing in Action (1984)" },
   "1-3": { type: "anecdote", text: "En 1968, Chuck Norris remporte...", source: "Championnat mondial de karaté" },
@@ -75,14 +79,25 @@ const calendarContent: Record<string, CalendarEntry> = {
 
 Répartition cible : ~121 facts, ~121 citations, ~121 anecdotes, mélangés uniformément sur l'année.
 
+Les 364 entrées + 2 Jours de Chuck sont un fichier TypeScript statique, hardcodé. Le contenu sera produit par génération assistée (Claude) puis relu/curé manuellement.
+
+### Jour(s) de Chuck
+
+Les Jour(s) de Chuck (1 ou 2 par an, inter-mois) apparaissent dans la vue annuelle comme une rangée spéciale en bas de la grille, avec un style distinct (fond doré, bordure spéciale). Ils ont leur propre contenu dans le modal (clés `"0-1"` et `"0-2"`).
+
+### Fallback contenu manquant
+
+Si une entrée est absente pour une date (possible pendant le développement incrémental), afficher un message par défaut : "Le contenu de ce jour est en cours de rédaction..." avec un style atténué.
+
 ### Vue annuelle (défaut)
 
 - Grille de 13 mini-mois (responsive : 4 cols desktop, 2 cols tablette, 1 col mobile)
-- Chaque mini-mois : titre du mois en police Western, grille 7x4 compacte
+- Chaque mini-mois : titre du mois en police Western, grille 7 colonnes × 4 lignes (remplissage gauche-droite, pas d'alignement jour de la semaine)
 - Chaque jour : numéro + pastille colorée selon le type
   - Or (#DAA520) = fact
   - Rouge (#A52A2A) = citation
   - Bleu (#2E5A88) = anecdote
+- **Légende** en haut de la section : 3 pastilles avec labels (Fact / Citation / Anecdote)
 - Mois courant mis en surbrillance (bordure dorée plus visible)
 - Date du jour marquée (fond doré)
 - Navigation par année (existante, à conserver)
@@ -90,7 +105,8 @@ Répartition cible : ~121 facts, ~121 citations, ~121 anecdotes, mélangés unif
 
 ### Vue mois (zoom)
 
-- S'affiche à la place de la vue annuelle (transition fade ou slide)
+- S'affiche à la place de la vue annuelle (transition fade, gérée en JS avec ajout/retrait de classes CSS)
+- L'état de vue (annuelle vs mois N) n'est pas persisté dans l'URL — retour à la vue annuelle par défaut quand on navigue vers #calendar
 - Barre de navigation en haut : bouton retour vue annuelle + nom du mois + flèches prev/next mois
 - Sélecteur rapide des 13 mois en barre horizontale
 - Grille 7x4 généreuse
@@ -107,7 +123,7 @@ Répartition cible : ~121 facts, ~121 citations, ~121 anecdotes, mélangés unif
 - Corps : texte en italique avec bordure gauche colorée selon le type
 - Pour les citations : source du film en dessous (opacité réduite)
 - Pour les anecdotes : contexte historique en dessous
-- Footer : navigation prev/next jour
+- Footer : navigation prev/next jour (à la frontière d'un mois, passe au mois suivant/précédent ; ne dépasse pas l'année courante)
 - Fermeture : bouton X + clic extérieur + touche Escape
 
 ## 4. Séparateurs entre sections
@@ -123,14 +139,14 @@ Ordre : séparateur 1 (Hero→Calendrier), séparateur 3 pellicule (Calendrier�
 ## 5. La Légende — Timeline mémorial
 
 Pas de changement majeur de contenu. Améliorations visuelles :
-- Titrage "Acte III" en petit au-dessus du titre de section
+- Titrage "Acte I" en petit au-dessus du titre de section (Ouverture n'a pas de numéro d'acte, le calendrier non plus — les actes commencent à La Légende)
 - Style cohérent avec le reste (bordures dorées, fonds subtils)
 - Conserve la timeline existante + bio + galerie photos
 
 ## 6. Ses Paroles & Exploits
 
 ### Layout
-- Titrage : "Acte IV" en petit + "Ses Paroles & Exploits" en titre doré
+- Titrage : "Acte II" en petit + "Ses Paroles & Exploits" en titre doré
 - Deux colonnes sur desktop, stack vertical sur mobile
 
 ### Colonne gauche — Carousel de citations
@@ -152,7 +168,7 @@ Pas de changement majeur de contenu. Améliorations visuelles :
 ## 7. En Action — Galerie vidéo
 
 Pas de changement majeur. Améliorations :
-- Titrage "Acte V" en petit au-dessus du titre
+- Titrage "Acte III" en petit au-dessus du titre
 - Style cohérent avec le thème global
 
 ## 8. Footer — Hommage
@@ -163,7 +179,7 @@ Conservé tel quel avec ajustements de style mineurs pour cohérence.
 
 - **Scroll fade-in** : sections apparaissent au scroll (existant, IntersectionObserver)
 - **Grain pellicule** : overlay CSS permanent sur Hero et modal
-- **Parallax léger** : background des sections se déplace légèrement au scroll (nouveau, CSS-only avec background-attachment: fixed)
+- **Parallax léger** : background des sections se déplace légèrement au scroll (nouveau, CSS-only avec background-attachment: fixed). Dégradation gracieuse sur iOS/mobile où cette propriété est ignorée — pas de fallback JS, le fond reste simplement statique.
 - **Zoom calendrier** : transition fade/scale de vue annuelle vers vue mois
 - **Modal** : fade-in avec léger scale-up
 
@@ -203,6 +219,7 @@ Le contenu sera généré et organisé dans `src/calendar-content.ts` :
 - `src/components/quotes-carousel.ts` — fusionné dans nouvelle section
 - `src/main.ts` — nouvel ordre des sections + séparateurs
 - `src/style.css` — nouveaux styles (grain pellicule, séparateurs, parallax, couleurs badges)
+- `src/quotes.ts` — extension de 12 à ~121 citations
 
 ### Nouveaux composants possibles
 - `src/components/paroles-exploits.ts` — section fusionnée (remplace joke-generator + quotes-carousel)
