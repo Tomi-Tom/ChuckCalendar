@@ -49,10 +49,10 @@ export function renderHero(): void {
 
       <!-- Floating background photos -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <img src="${CHUCK_YOUNG}" class="absolute top-[5%] left-[3%] w-32 md:w-44 rotate-[-12deg] rounded-lg opacity-[0.07] border border-gold/20" alt="" />
-        <img src="${CHUCK_ACTION}" class="absolute top-[10%] right-[3%] w-28 md:w-40 rotate-[8deg] rounded-lg opacity-[0.06] border border-gold/20" alt="" />
-        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[15%] left-[8%] w-24 rotate-[15deg] opacity-[0.05]" alt="" />
-        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[8%] right-[10%] w-20 rotate-[-20deg] opacity-[0.04]" alt="" />
+        <img src="${CHUCK_YOUNG}" class="absolute top-[5%] left-[3%] w-32 md:w-44 rounded-lg opacity-[0.07] border border-gold/20 slow-drift" style="--drift-rotate:-12deg;--drift-x:8px;--drift-y:-12px" alt="" />
+        <img src="${CHUCK_ACTION}" class="absolute top-[10%] right-[3%] w-28 md:w-40 rounded-lg opacity-[0.06] border border-gold/20 slow-drift" style="--drift-rotate:8deg;--drift-x:-10px;--drift-y:8px;animation-delay:-7s" alt="" />
+        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[15%] left-[8%] w-24 opacity-[0.05] slow-drift" style="--drift-rotate:15deg;--drift-x:6px;--drift-y:-8px;animation-delay:-13s" alt="" />
+        <img src="${CHUCK_MEMORIAL}" class="absolute bottom-[8%] right-[10%] w-20 opacity-[0.04] slow-drift" style="--drift-rotate:-20deg;--drift-x:-8px;--drift-y:6px;animation-delay:-3s" alt="" />
       </div>
 
       <!-- Production banner -->
@@ -61,7 +61,7 @@ export function renderHero(): void {
       </div>
 
       <!-- Content -->
-      <div class="relative z-10 text-center px-4 max-w-3xl mx-auto pt-16">
+      <div class="relative z-10 text-center px-4 max-w-3xl mx-auto pt-16 stagger-children">
         <!-- Chuck portrait -->
         <div class="mb-6 flex justify-center">
           <img src="${CHUCK_HERO}" alt="Chuck Norris"
@@ -70,16 +70,15 @@ export function renderHero(): void {
         </div>
 
         <!-- Title -->
-        <h1 class="font-western text-gold text-4xl md:text-6xl lg:text-7xl mb-1 tracking-wider"
-            style="text-shadow: 0 0 20px rgba(218,165,32,0.4);">
+        <h1 class="font-western text-gold text-4xl md:text-6xl lg:text-7xl mb-1 tracking-wider glow-pulse">
           CHUCK NORRIS
         </h1>
         <p class="text-wheat/60 text-xs tracking-[0.2em] uppercase mb-8">
-          10 Mars 1940 — 19 Mars 2026
+          10 Mars 1940 — 19 Mars 2026 · Kauai, Hawaï
         </p>
 
         <!-- ACN date block -->
-        <div class="bg-gold/10 border border-gold/30 rounded-lg py-4 px-6 mx-auto max-w-sm mb-6">
+        <div class="bg-gold/10 border border-gold/30 rounded-lg py-4 px-6 mx-auto max-w-sm mb-6 shimmer-border">
           <p class="text-wheat/50 text-[0.65rem] tracking-[0.2em] uppercase mb-1">Nous sommes le</p>
           <p class="text-gold text-xl md:text-2xl font-bold">${dateDisplay}</p>
           <p id="hero-clock" class="font-mono text-wheat/80 text-base mt-1 tabular-nums">${formatACNTime()}</p>

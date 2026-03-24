@@ -214,7 +214,7 @@ function renderAnnualContent(today: ReturnType<typeof getTodayACN>): string {
     const borderClass = isCurrentMonth ? 'border-gold/60' : 'border-gold/20';
 
     monthsHTML += `
-      <div class="month-card bg-dark/80 border ${borderClass} rounded-lg p-3 cursor-pointer hover:border-gold/50 hover:bg-dark/60 transition-all"
+      <div class="month-card hover-lift bg-dark/80 border ${borderClass} rounded-lg p-3 cursor-pointer hover:border-gold/50 hover:bg-dark/60 transition-all"
            data-month="${m}">
         <h3 class="font-western text-gold text-center text-sm mb-2">${monthName}</h3>
         <div class="grid grid-cols-7 gap-0.5">

@@ -63,7 +63,7 @@ export const timeline: TimelineEvent[] = [
   {
     year: '2026 (An 1 ACN)',
     title: 'L\'Ère Chuck Norris commence',
-    description: 'Le 19 mars 2026, Chuck Norris décide de transcender. Le lendemain, l\'ère ACN commence — le calendrier se réinitialise en son honneur.',
+    description: 'Le matin du 19 mars 2026, Chuck Norris s\'éteint à Kauai, Hawaï, à l\'âge de 86 ans. Le lendemain, l\'ère ACN (Après Chuck Norris) commence — le calendrier se réinitialise en son honneur.',
   },
 ];
 

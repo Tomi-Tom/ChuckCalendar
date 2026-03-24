@@ -14,7 +14,7 @@ export function renderSeparator(type: SeparatorType, quoteIndex: number = 0): st
         <div class="py-12 select-none">
           <div class="max-w-2xl mx-auto text-center px-4">
             <div class="h-px bg-gradient-to-r from-transparent via-gold to-transparent mb-4"></div>
-            <p class="italic text-wheat/60 text-sm">"${SEPARATOR_QUOTES[quoteIndex % SEPARATOR_QUOTES.length]}"</p>
+            <p class="italic text-wheat/60 text-sm separator-animate">"${SEPARATOR_QUOTES[quoteIndex % SEPARATOR_QUOTES.length]}"</p>
             <div class="h-px bg-gradient-to-r from-transparent via-gold to-transparent mt-4"></div>
           </div>
         </div>`;
@@ -24,7 +24,7 @@ export function renderSeparator(type: SeparatorType, quoteIndex: number = 0): st
         <div class="py-12 select-none">
           <div class="flex items-center justify-center gap-4 px-4">
             <div class="flex-1 max-w-[150px] h-px bg-gradient-to-r from-transparent to-gold"></div>
-            <span class="text-gold text-2xl">&#9733;</span>
+            <span class="text-gold text-2xl separator-animate">&#9733;</span>
             <div class="flex-1 max-w-[150px] h-px bg-gradient-to-l from-transparent to-gold"></div>
           </div>
         </div>`;

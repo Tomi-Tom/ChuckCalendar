@@ -147,6 +147,67 @@ a {
 .dot-citation { background-color: #A52A2A; }
 .dot-anecdote { background-color: #2E5A88; }
 
+/* ── Gold glow pulse on hero title ── */
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(218,165,32,0.4); }
+  50% { text-shadow: 0 0 40px rgba(218,165,32,0.7), 0 0 80px rgba(218,165,32,0.3); }
+}
+.glow-pulse {
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* ── Staggered fade-in for children ── */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(1rem);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+
+/* ── Hover lift effect on cards ── */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(218,165,32,0.15);
+}
+
+/* ── Animated gold border shimmer ── */
+@keyframes borderShimmer {
+  0% { border-color: rgba(218,165,32,0.2); }
+  50% { border-color: rgba(218,165,32,0.6); }
+  100% { border-color: rgba(218,165,32,0.2); }
+}
+.shimmer-border {
+  animation: borderShimmer 3s ease-in-out infinite;
+}
+
+/* ── Slow drift for background images ── */
+@keyframes slowDrift {
+  0% { transform: translate(0, 0) rotate(var(--drift-rotate, 0deg)); }
+  50% { transform: translate(var(--drift-x, 10px), var(--drift-y, -10px)) rotate(var(--drift-rotate, 0deg)); }
+  100% { transform: translate(0, 0) rotate(var(--drift-rotate, 0deg)); }
+}
+.slow-drift {
+  animation: slowDrift 20s ease-in-out infinite;
+}
+
+/* ── Separator float animation ── */
+@keyframes separatorFloat {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.separator-animate {
+  animation: separatorFloat 4s ease-in-out infinite;
+}
+
 /* ── Responsive adjustments ── */
 @media (max-width: 768px) {
   #hero h1 {

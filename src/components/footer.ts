@@ -20,7 +20,7 @@ export function renderFooter(): void {
     </div>
 
     <p class="text-lg font-western text-wheat/90 mb-2">★ À la mémoire éternelle de Chuck Norris ★</p>
-    <p class="text-sm text-wheat/60 mb-1">Carlos Ray Norris — 10 Mars 1940 — 19 Mars 2026</p>
+    <p class="text-sm text-wheat/60 mb-1">Carlos Ray Norris — 10 Mars 1940, Ryan, Oklahoma — 19 Mars 2026, Kauai, Hawaï — 86 ans</p>
     <p class="mb-3">Calendrier ACN — Ère Après Chuck Norris</p>
     <p class="text-sm text-wheat/50 mb-4">${today.day} ${today.monthName} An ${today.year} ACN</p>
 
