@@ -1,9 +1,9 @@
 const NAV_LINKS = [
-  { label: 'I. Ouverture', href: '#hero' },
-  { label: 'II. Calendrier', href: '#calendar' },
-  { label: 'III. Légende', href: '#memorial' },
-  { label: 'IV. Paroles', href: '#paroles' },
-  { label: 'V. Vidéos', href: '#videos' },
+  { label: 'Ouverture', href: '#hero' },
+  { label: 'Calendrier', href: '#calendar' },
+  { label: 'La Légende', href: '#memorial' },
+  { label: 'Paroles', href: '#paroles' },
+  { label: 'Vidéos', href: '#videos' },
 ];
 
 export function renderNavbar(): void {

@@ -90,7 +90,7 @@ function getYearStart(acnYear: number): Date {
  */
 export function getChuckDaysCount(year: number): number {
   // Compute the start of this ACN year
-  // For year 1, start = ACN_EPOCH (March 20, 2025)
+  // For year 1, start = ACN_EPOCH (March 20, 2026)
   // The 364th day (last regular day) is start + 363 days
   // The Gregorian year of that day determines leap status
 
