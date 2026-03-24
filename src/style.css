@@ -100,6 +100,56 @@ main > section + section {
   font-variant-numeric: tabular-nums;
 }
 
+/* ── Film grain overlay ── */
+.film-grain {
+  position: relative;
+}
+.film-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Calendar zoom transition ── */
+.calendar-view-enter {
+  animation: fadeScale 0.3s ease-out forwards;
+}
+.calendar-view-exit {
+  animation: fadeScale 0.3s ease-out reverse forwards;
+}
+@keyframes fadeScale {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Modal animation ── */
+.modal-enter {
+  animation: modalIn 0.25s ease-out forwards;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Content type badge colors ── */
+.badge-fact { background-color: #DAA520; color: #1a0f00; }
+.badge-citation { background-color: #A52A2A; color: #F5DEB3; }
+.badge-anecdote { background-color: #2E5A88; color: #F5DEB3; }
+
+/* ── Content type dot colors ── */
+.dot-fact { background-color: #DAA520; }
+.dot-citation { background-color: #A52A2A; }
+.dot-anecdote { background-color: #2E5A88; }
+
 /* ── Responsive adjustments ── */
 @media (max-width: 768px) {
   #hero h1 {
