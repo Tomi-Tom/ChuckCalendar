@@ -9,6 +9,7 @@ import { getCalendarEntry, type ContentType } from '../calendar-content';
 let currentYear = 1;
 let viewMode: 'annual' | 'month' = 'annual';
 let selectedMonth = 1;
+let isTransitioning = false;
 
 const TYPE_DOT_CLASS: Record<ContentType, string> = {
   fact: 'dot-fact',
@@ -41,29 +42,107 @@ export function renderCalendar(): void {
   const today = getTodayACN();
   currentYear = today.year;
 
-  render(container, today);
+  renderShell(container, today);
 }
 
-function render(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
-  if (viewMode === 'annual') {
-    renderAnnualView(container, today);
-  } else {
-    renderMonthView(container, today);
+// ── Shell (persistent wrapper: title, legend, nav, modal) ──
+
+function renderShell(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
+  container.innerHTML = `
+    <div class="py-16 px-4"
+         style="background: linear-gradient(180deg, #1a0f00 0%, #2a1508 50%, #1a0f00 100%);">
+      <div class="max-w-7xl mx-auto">
+        ${renderHeader()}
+        <div id="cal-nav"></div>
+        <div id="cal-content" class="transition-opacity duration-300 ease-in-out"></div>
+      </div>
+    </div>
+    ${renderModalHTML()}
+  `;
+
+  bindModalCloseEvents();
+  renderView(container, today, false);
+}
+
+function renderView(container: HTMLElement, today: ReturnType<typeof getTodayACN>, animate: boolean): void {
+  const navEl = document.getElementById('cal-nav');
+  const contentEl = document.getElementById('cal-content');
+  if (!navEl || !contentEl) return;
+
+  if (animate && !isTransitioning) {
+    isTransitioning = true;
+    contentEl.style.opacity = '0';
+    setTimeout(() => {
+      updateNav(navEl, container, today);
+      updateContent(contentEl, container, today);
+      contentEl.style.opacity = '1';
+      isTransitioning = false;
+    }, 300);
+  } else if (!isTransitioning) {
+    updateNav(navEl, container, today);
+    updateContent(contentEl, container, today);
   }
 }
 
-// ── Shared header (title + description + legend) ──
+function updateNav(navEl: HTMLElement, container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
+  if (viewMode === 'annual') {
+    navEl.innerHTML = `
+      <div class="flex items-center justify-center gap-6 mb-10">
+        ${renderViewSwitch()}
+        <button id="year-prev"
+                class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer${currentYear <= 1 ? ' opacity-30 pointer-events-none' : ''}">
+          &lt;
+        </button>
+        <span class="font-western text-gold text-2xl md:text-3xl">An ${currentYear}</span>
+        <button id="year-next"
+                class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer">
+          &gt;
+        </button>
+      </div>`;
+  } else {
+    const monthName = ACN_MONTH_NAMES[selectedMonth - 1];
+    const monthSelectorHTML = ACN_MONTH_NAMES.map((name, i) => {
+      const m = i + 1;
+      const isActive = m === selectedMonth;
+      return `<button class="month-sel-btn px-2 py-1 rounded text-[0.6rem] transition-all whitespace-nowrap ${
+        isActive ? 'bg-gold/20 text-gold border border-gold/40' : 'text-wheat/40 hover:text-gold'
+      }" data-sel-month="${m}">${name}</button>`;
+    }).join('');
+
+    navEl.innerHTML = `
+      <div class="flex items-center justify-center gap-6 mb-6">
+        ${renderViewSwitch()}
+        <button id="month-prev" class="text-gold hover:text-wheat transition-colors cursor-pointer text-lg font-western${selectedMonth <= 1 ? ' opacity-30 pointer-events-none' : ''}">&lt;</button>
+        <h3 class="font-western text-gold text-2xl md:text-3xl text-center tracking-wider min-w-[200px]">${monthName} — An ${currentYear}</h3>
+        <button id="month-next" class="text-gold hover:text-wheat transition-colors cursor-pointer text-lg font-western${selectedMonth >= 13 ? ' opacity-30 pointer-events-none' : ''}">&gt;</button>
+      </div>
+      <div class="flex gap-1 overflow-x-auto pb-2 mb-6 scrollbar-none justify-center flex-wrap">
+        ${monthSelectorHTML}
+      </div>`;
+  }
+
+  bindNavEvents(navEl, container, today);
+}
+
+function updateContent(contentEl: HTMLElement, container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
+  if (viewMode === 'annual') {
+    contentEl.innerHTML = renderAnnualContent(today);
+    bindAnnualContentEvents(container, today);
+  } else {
+    contentEl.innerHTML = renderMonthContent(today);
+    bindMonthContentEvents(container, today);
+  }
+}
+
+// ── Shared header ──
 
 function renderHeader(): string {
   return `
-    <!-- Title -->
     <h2 class="font-western text-gold text-4xl md:text-5xl text-center mb-2"
         style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
       Le Calendrier Sacré
     </h2>
     <p class="text-center text-wheat/50 font-body text-sm mb-6 italic">13 mois. 28 jours. Le seul calendrier approuvé par Chuck.</p>
-
-    <!-- Legend -->
     <div class="flex items-center justify-center gap-6 mb-8">
       <div class="flex items-center gap-1.5">
         <div class="w-2.5 h-2.5 rounded-full dot-fact"></div>
@@ -80,51 +159,39 @@ function renderHeader(): string {
     </div>`;
 }
 
-// ── View switch button ──
-
 function renderViewSwitch(): string {
   const isAnnual = viewMode === 'annual';
   return `
     <button id="view-switch" class="flex items-center gap-2 border border-gold/30 rounded-lg px-3 py-1.5 text-xs hover:bg-gold/10 transition-all cursor-pointer">
       <span class="${isAnnual ? 'text-gold' : 'text-wheat/40'}">Année</span>
-      <div class="w-8 h-4 rounded-full relative ${isAnnual ? 'bg-gold/20' : 'bg-gold/20'}">
+      <div class="w-8 h-4 rounded-full relative bg-gold/20">
         <div class="absolute top-0.5 w-3 h-3 rounded-full bg-gold transition-all ${isAnnual ? 'left-0.5' : 'left-4'}"></div>
       </div>
       <span class="${!isAnnual ? 'text-gold' : 'text-wheat/40'}">Mois</span>
     </button>`;
 }
 
-// ── Shared modal HTML ──
+// ── Jour(s) de Chuck (shared between both views) ──
 
-function renderModalHTML(): string {
-  return `
-    <div id="cal-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70">
-      <div id="cal-modal-card" class="film-grain bg-[#1a0f00] border-2 border-gold/40 rounded-lg max-w-lg w-full mx-4 relative modal-enter">
-        <div class="relative z-10 p-6 md:p-8">
-          <button id="cal-modal-close"
-                  class="absolute top-3 right-4 text-gold text-2xl cursor-pointer hover:text-wheat transition-colors">
-            &times;
-          </button>
-          <div class="flex justify-between items-center mb-4 pr-8">
-            <span id="cal-modal-badge" class="px-3 py-1 rounded text-xs font-bold uppercase tracking-wider"></span>
-            <span id="cal-modal-date" class="text-wheat/60 text-xs"></span>
-          </div>
-          <div id="cal-modal-body" class="mb-4">
-            <p id="cal-modal-text" class="italic text-wheat text-lg leading-relaxed border-l-3 pl-4"></p>
-            <p id="cal-modal-source" class="text-wheat/50 text-sm mt-2 pl-4"></p>
-          </div>
-          <div class="flex justify-between text-wheat/40 text-sm">
-            <button id="cal-modal-prev" class="hover:text-gold transition-colors cursor-pointer">&larr; Jour précédent</button>
-            <button id="cal-modal-next" class="hover:text-gold transition-colors cursor-pointer">Jour suivant &rarr;</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
+function renderChuckDays(): string {
+  const chuckDaysCount = getChuckDaysCount(currentYear);
+  if (chuckDaysCount === 0) return '';
+
+  let html = '';
+  for (let d = 1; d <= chuckDaysCount; d++) {
+    html += `
+      <div class="inline-flex items-center gap-2 bg-gold/15 border border-gold/40 rounded-lg px-4 py-2 cursor-pointer hover:bg-gold/25 transition-all"
+           data-chuck-day="${d}">
+        <span class="text-gold font-western text-sm">Jour de Chuck${d > 1 ? ` ${d}` : ''}</span>
+        <div class="w-2 h-2 rounded-full dot-anecdote"></div>
+      </div>`;
+  }
+  return `<div class="flex justify-center gap-4 mt-6">${html}</div>`;
 }
 
-// ── Annual View ──
+// ── Annual Content ──
 
-function renderAnnualView(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
+function renderAnnualContent(today: ReturnType<typeof getTodayACN>): string {
   let monthsHTML = '';
   for (let m = 1; m <= 13; m++) {
     const monthName = ACN_MONTH_NAMES[m - 1];
@@ -156,96 +223,32 @@ function renderAnnualView(container: HTMLElement, today: ReturnType<typeof getTo
       </div>`;
   }
 
-  // Jour(s) de Chuck
-  const chuckDaysCount = getChuckDaysCount(currentYear);
-  let chuckDaysHTML = '';
-  for (let d = 1; d <= chuckDaysCount; d++) {
-    chuckDaysHTML += `
-      <div class="inline-flex items-center gap-2 bg-gold/15 border border-gold/40 rounded-lg px-4 py-2 cursor-pointer hover:bg-gold/25 transition-all"
-           data-chuck-day="${d}">
-        <span class="text-gold font-western text-sm">Jour de Chuck ${d > 1 ? d : ''}</span>
-        <div class="w-2 h-2 rounded-full dot-anecdote"></div>
-      </div>`;
-  }
-
-  container.innerHTML = `
-    <div class="py-16 px-4"
-         style="background: linear-gradient(180deg, #1a0f00 0%, #2a1508 50%, #1a0f00 100%);">
-      <div class="max-w-7xl mx-auto">
-        ${renderHeader()}
-
-        <!-- Navigation row: switch + year nav -->
-        <div class="flex items-center justify-center gap-6 mb-10">
-          ${renderViewSwitch()}
-          <button id="year-prev"
-                  class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer${currentYear <= 1 ? ' opacity-30 pointer-events-none' : ''}">
-            &lt;
-          </button>
-          <span class="font-western text-gold text-2xl md:text-3xl">An ${currentYear}</span>
-          <button id="year-next"
-                  class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer">
-            &gt;
-          </button>
-        </div>
-
-        <!-- Months grid -->
-        <div id="calendar-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
-          ${monthsHTML}
-        </div>
-
-        <!-- Jour(s) de Chuck -->
-        ${chuckDaysCount > 0 ? `
-        <div class="flex justify-center gap-4 mb-10">
-          ${chuckDaysHTML}
-        </div>` : ''}
-      </div>
+  return `
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      ${monthsHTML}
     </div>
-
-    ${renderModalHTML()}
-  `;
-
-  bindAnnualEvents(container, today);
-  bindModalCloseEvents();
+    ${renderChuckDays()}`;
 }
 
-function bindAnnualEvents(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
-  // View switch
-  document.getElementById('view-switch')?.addEventListener('click', () => {
-    viewMode = 'month';
-    selectedMonth = today.isChuckDay ? 1 : today.month;
-    render(container, today);
-  });
-
-  // Year nav
-  document.getElementById('year-prev')?.addEventListener('click', () => {
-    if (currentYear > 1) { currentYear--; render(container, today); }
-  });
-  document.getElementById('year-next')?.addEventListener('click', () => {
-    currentYear++; render(container, today);
-  });
-
-  // Month card clicks → zoom
+function bindAnnualContentEvents(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
   container.querySelectorAll<HTMLElement>('.month-card').forEach(card => {
     card.addEventListener('click', () => {
       selectedMonth = Number(card.dataset.month);
       viewMode = 'month';
-      render(container, today);
+      renderView(container, today, true);
     });
   });
 
-  // Jour de Chuck clicks
   container.querySelectorAll<HTMLElement>('[data-chuck-day]').forEach(el => {
     el.addEventListener('click', () => {
-      const d = Number(el.dataset.chuckDay);
-      showModal(0, d, container, today);
+      showModal(0, Number(el.dataset.chuckDay), container, today);
     });
   });
 }
 
-// ── Month View ──
+// ── Month Content ──
 
-function renderMonthView(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
-  const monthName = ACN_MONTH_NAMES[selectedMonth - 1];
+function renderMonthContent(today: ReturnType<typeof getTodayACN>): string {
   const days = getMonthDays(currentYear, selectedMonth);
   const isCurrentMonth = !today.isChuckDay && today.year === currentYear && today.month === selectedMonth;
 
@@ -267,82 +270,92 @@ function renderMonthView(container: HTMLElement, today: ReturnType<typeof getTod
       </button>`;
   }
 
-  // Month selector bar
-  const monthSelectorHTML = ACN_MONTH_NAMES.map((name, i) => {
-    const m = i + 1;
-    const isActive = m === selectedMonth;
-    return `<button class="month-sel-btn px-2 py-1 rounded text-[0.6rem] transition-all whitespace-nowrap ${
-      isActive ? 'bg-gold/20 text-gold border border-gold/40' : 'text-wheat/40 hover:text-gold'
-    }" data-sel-month="${m}">${name}</button>`;
-  }).join('');
-
-  container.innerHTML = `
-    <div class="py-16 px-4 calendar-view-enter"
-         style="background: linear-gradient(180deg, #1a0f00 0%, #2a1508 50%, #1a0f00 100%);">
-      <div class="max-w-5xl mx-auto">
-        ${renderHeader()}
-
-        <!-- Navigation row: switch + month nav -->
-        <div class="flex items-center justify-center gap-6 mb-6">
-          ${renderViewSwitch()}
-          <button id="month-prev" class="text-gold hover:text-wheat transition-colors cursor-pointer text-lg font-western${selectedMonth <= 1 ? ' opacity-30 pointer-events-none' : ''}">&lt;</button>
-          <h3 class="font-western text-gold text-2xl md:text-3xl text-center tracking-wider min-w-[200px]">${monthName} — An ${currentYear}</h3>
-          <button id="month-next" class="text-gold hover:text-wheat transition-colors cursor-pointer text-lg font-western${selectedMonth >= 13 ? ' opacity-30 pointer-events-none' : ''}">&gt;</button>
-        </div>
-
-        <!-- Month selector -->
-        <div class="flex gap-1 overflow-x-auto pb-2 mb-6 scrollbar-none justify-center flex-wrap">
-          ${monthSelectorHTML}
-        </div>
-
-        <!-- Days grid -->
-        <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 mb-6">
-          ${daysGridHTML}
-        </div>
+  return `
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-4 sm:grid-cols-7 gap-2">
+        ${daysGridHTML}
       </div>
-    </div>
-
-    ${renderModalHTML()}
-  `;
-
-  bindMonthEvents(container, today);
-  bindModalCloseEvents();
+      ${renderChuckDays()}
+    </div>`;
 }
 
-function bindMonthEvents(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
-  // View switch
-  document.getElementById('view-switch')?.addEventListener('click', () => {
-    viewMode = 'annual';
-    render(container, today);
-  });
-
-  // Month prev/next
-  document.getElementById('month-prev')?.addEventListener('click', () => {
-    if (selectedMonth > 1) { selectedMonth--; render(container, today); }
-  });
-  document.getElementById('month-next')?.addEventListener('click', () => {
-    if (selectedMonth < 13) { selectedMonth++; render(container, today); }
-  });
-
-  // Month selector
-  container.querySelectorAll<HTMLElement>('.month-sel-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      selectedMonth = Number(btn.dataset.selMonth);
-      render(container, today);
-    });
-  });
-
-  // Day clicks
+function bindMonthContentEvents(container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
   container.querySelectorAll<HTMLElement>('.day-cell').forEach(cell => {
     cell.addEventListener('click', () => {
-      const month = Number(cell.dataset.month);
-      const day = Number(cell.dataset.day);
-      showModal(month, day, container, today);
+      showModal(Number(cell.dataset.month), Number(cell.dataset.day), container, today);
     });
   });
+
+  container.querySelectorAll<HTMLElement>('[data-chuck-day]').forEach(el => {
+    el.addEventListener('click', () => {
+      showModal(0, Number(el.dataset.chuckDay), container, today);
+    });
+  });
+}
+
+// ── Nav events ──
+
+function bindNavEvents(navEl: HTMLElement, container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
+  navEl.querySelector('#view-switch')?.addEventListener('click', () => {
+    if (viewMode === 'annual') {
+      viewMode = 'month';
+      selectedMonth = today.isChuckDay ? 1 : today.month;
+    } else {
+      viewMode = 'annual';
+    }
+    renderView(container, today, true);
+  });
+
+  if (viewMode === 'annual') {
+    navEl.querySelector('#year-prev')?.addEventListener('click', () => {
+      if (currentYear > 1) { currentYear--; renderView(container, today, true); }
+    });
+    navEl.querySelector('#year-next')?.addEventListener('click', () => {
+      currentYear++; renderView(container, today, true);
+    });
+  } else {
+    navEl.querySelector('#month-prev')?.addEventListener('click', () => {
+      if (selectedMonth > 1) { selectedMonth--; renderView(container, today, true); }
+    });
+    navEl.querySelector('#month-next')?.addEventListener('click', () => {
+      if (selectedMonth < 13) { selectedMonth++; renderView(container, today, true); }
+    });
+    navEl.querySelectorAll<HTMLElement>('.month-sel-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedMonth = Number(btn.dataset.selMonth);
+        renderView(container, today, true);
+      });
+    });
+  }
 }
 
 // ── Modal ──
+
+function renderModalHTML(): string {
+  return `
+    <div id="cal-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70">
+      <div id="cal-modal-card" class="film-grain bg-[#1a0f00] border-2 border-gold/40 rounded-lg max-w-lg w-full mx-4 relative modal-enter">
+        <div class="relative z-10 p-6 md:p-8">
+          <button id="cal-modal-close"
+                  class="absolute top-3 right-4 text-gold text-2xl cursor-pointer hover:text-wheat transition-colors">
+            &times;
+          </button>
+          <div class="flex justify-between items-center mb-4 pr-8">
+            <span id="cal-modal-badge" class="px-3 py-1 rounded text-xs font-bold uppercase tracking-wider"></span>
+            <span id="cal-modal-date" class="text-wheat/60 text-xs"></span>
+          </div>
+          <div id="cal-modal-body" class="mb-4">
+            <p id="cal-modal-text" class="italic text-wheat text-lg leading-relaxed border-l-3 pl-4"></p>
+            <p id="cal-modal-source" class="text-wheat/50 text-sm mt-2 pl-4"></p>
+          </div>
+          <div class="flex justify-between text-wheat/40 text-sm">
+            <button id="cal-modal-prev" class="hover:text-gold transition-colors cursor-pointer">&larr; Jour précédent</button>
+            <button id="cal-modal-next" class="hover:text-gold transition-colors cursor-pointer">Jour suivant &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
 
 let modalMonth = 0;
 let modalDay = 0;
@@ -351,24 +364,18 @@ function bindModalCloseEvents(): void {
   const modal = document.getElementById('cal-modal');
   if (!modal) return;
 
-  // Close button
-  const closeBtn = document.getElementById('cal-modal-close');
-  closeBtn?.addEventListener('click', (e) => {
+  document.getElementById('cal-modal-close')?.addEventListener('click', (e) => {
     e.stopPropagation();
     closeModal();
   });
 
-  // Backdrop click
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
   });
 
-  // Escape key (use a named function to avoid duplicates)
-  document.addEventListener('keydown', handleEscape);
-}
-
-function handleEscape(e: KeyboardEvent): void {
-  if (e.key === 'Escape') closeModal();
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
 }
 
 function showModal(month: number, day: number, container: HTMLElement, today: ReturnType<typeof getTodayACN>): void {
@@ -386,23 +393,17 @@ function showModal(month: number, day: number, container: HTMLElement, today: Re
 
   if (!modal || !badge || !dateEl || !textEl || !sourceEl) return;
 
-  // Badge
   badge.className = `px-3 py-1 rounded text-xs font-bold uppercase tracking-wider ${TYPE_BADGE_CLASS[entry.type]}`;
   badge.textContent = TYPE_LABEL[entry.type];
 
-  // Date
-  if (month === 0) {
-    dateEl.textContent = `Jour de Chuck ${day}, An ${currentYear} ACN`;
-  } else {
-    dateEl.textContent = `${day} ${ACN_MONTH_NAMES[month - 1]}, An ${currentYear} ACN`;
-  }
+  dateEl.textContent = month === 0
+    ? `Jour de Chuck ${day}, An ${currentYear} ACN`
+    : `${day} ${ACN_MONTH_NAMES[month - 1]}, An ${currentYear} ACN`;
 
-  // Content
   textEl.className = `italic text-wheat text-lg leading-relaxed border-l-3 ${TYPE_BORDER[entry.type]} pl-4`;
   textEl.textContent = entry.text;
   sourceEl.textContent = entry.source ? `— ${entry.source}` : '';
 
-  // Prev/next visibility
   if (month === 0) {
     prevBtn.style.visibility = 'hidden';
     nextBtn.style.visibility = day < getChuckDaysCount(currentYear) ? 'visible' : 'hidden';
@@ -411,11 +412,9 @@ function showModal(month: number, day: number, container: HTMLElement, today: Re
     nextBtn.style.visibility = (month === 13 && day === 28) ? 'hidden' : 'visible';
   }
 
-  // Show
   modal.classList.remove('hidden');
   modal.classList.add('flex');
 
-  // Bind prev/next nav (remove old listeners by cloning)
   const newPrev = prevBtn.cloneNode(true) as HTMLButtonElement;
   const newNext = nextBtn.cloneNode(true) as HTMLButtonElement;
   prevBtn.replaceWith(newPrev);

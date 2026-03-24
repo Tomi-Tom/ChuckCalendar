@@ -21,7 +21,6 @@ renderFooter();
 function injectSeparators(): void {
   const separators: [string, 'quote' | 'star' | 'film', number?][] = [
     ['hero', 'quote', 0],
-    ['calendar', 'film'],
     ['memorial', 'star'],
     ['paroles', 'quote', 1],
   ];
