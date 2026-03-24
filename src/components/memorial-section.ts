@@ -62,9 +62,10 @@ export function renderMemorial(): void {
       </div>
 
       <!-- Section title -->
+      <p class="text-xs tracking-[0.3em] uppercase text-wheat/40 text-center mb-1">Acte I</p>
       <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-6 tracking-wider"
           style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
-        Mémorial
+        La Légende
       </h2>
       <p class="font-western text-wheat/80 text-xl md:text-2xl text-center mb-16"
          style="text-shadow: 1px 2px 4px rgba(0,0,0,0.5);">

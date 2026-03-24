@@ -46,9 +46,10 @@ export function renderVideos(): void {
         <span class="text-gold text-2xl">★</span>
       </div>
 
+      <p class="text-xs tracking-[0.3em] uppercase text-wheat/40 text-center mb-1">Acte III</p>
       <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-4 tracking-wider"
           style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
-        Moments Iconiques
+        En Action
       </h2>
       <p class="text-center text-wheat/50 font-body text-sm mb-12 italic">
         Les scènes que même Chuck Norris regarde en boucle
