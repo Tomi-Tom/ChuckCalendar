@@ -61,7 +61,7 @@ export function renderHero(): void {
       </div>
 
       <!-- Content -->
-      <div class="relative z-10 text-center px-4 max-w-3xl mx-auto pt-16 stagger-children">
+      <div class="relative z-10 text-center px-4 max-w-3xl mx-auto pt-16">
         <!-- Chuck portrait -->
         <div class="mb-6 flex justify-center">
           <img src="${CHUCK_HERO}" alt="Chuck Norris"
@@ -74,7 +74,7 @@ export function renderHero(): void {
           CHUCK NORRIS
         </h1>
         <p class="text-wheat/60 text-xs tracking-[0.2em] uppercase mb-8">
-          10 Mars 1940 — 19 Mars 2026 · Kauai, Hawaï
+          10 Mars 1940 — 19 Mars 2026
         </p>
 
         <!-- ACN date block -->
