@@ -20,7 +20,7 @@ export interface ACNDate {
 const ACN_EPOCH = new Date(2026, 2, 20); // Month is 0-indexed: 2 = March
 
 export const ACN_MONTH_NAMES: string[] = [
-  'Norrisendre',
+  'Janorris',
   'Févriaire',
   'Marsial',
   'Avrilanche',
@@ -32,7 +32,7 @@ export const ACN_MONTH_NAMES: string[] = [
   'Octobrave',
   'Novembrise',
   'Décembrase',
-  'Chuckicendre',
+  'Chucknorembre',
 ];
 
 const DAYS_PER_MONTH = 28;
