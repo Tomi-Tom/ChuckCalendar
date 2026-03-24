@@ -3,24 +3,36 @@ import { renderNavbar } from "./components/navbar";
 import { renderHero } from "./components/hero";
 import { renderCalendar } from "./components/calendar-grid";
 import { renderMemorial } from "./components/memorial-section";
-import { renderJokeGenerator } from "./components/joke-generator";
-import { renderQuotes } from "./components/quotes-carousel";
+import { renderParolesExploits } from "./components/paroles-exploits";
 import { renderVideos } from "./components/video-gallery";
 import { renderFooter } from "./components/footer";
-
-// Render navbar first (sticky top)
-renderNavbar();
+import { renderSeparator } from "./components/section-separator";
 
 // Render all sections
+renderNavbar();
 renderHero();
 renderCalendar();
 renderMemorial();
-renderJokeGenerator();
-renderQuotes();
+renderParolesExploits();
 renderVideos();
-
-// Render footer last
 renderFooter();
+
+// Inject separators between sections
+function injectSeparators(): void {
+  const separators: [string, 'quote' | 'star' | 'film', number?][] = [
+    ['hero', 'quote', 0],
+    ['calendar', 'film'],
+    ['memorial', 'star'],
+    ['paroles', 'quote', 1],
+  ];
+  for (const [afterId, type, quoteIdx] of separators) {
+    const section = document.getElementById(afterId);
+    if (section) {
+      section.insertAdjacentHTML('afterend', renderSeparator(type, quoteIdx));
+    }
+  }
+}
+injectSeparators();
 
 // ── Scroll fade-in animations ──
 function initScrollAnimations(): void {
