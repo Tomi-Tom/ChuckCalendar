@@ -1,12 +1,9 @@
-import { CHUCK_AVATAR } from '../chuck-images';
-
 const NAV_LINKS = [
-  { label: 'Accueil', href: '#hero' },
-  { label: 'Calendrier', href: '#calendar' },
-  { label: 'Mémorial', href: '#memorial' },
-  { label: 'Facts', href: '#jokes' },
-  { label: 'Citations', href: '#quotes' },
-  { label: 'Vidéos', href: '#videos' },
+  { label: 'I. Ouverture', href: '#hero' },
+  { label: 'II. Calendrier', href: '#calendar' },
+  { label: 'III. Légende', href: '#memorial' },
+  { label: 'IV. Paroles', href: '#paroles' },
+  { label: 'V. Vidéos', href: '#videos' },
 ];
 
 export function renderNavbar(): void {
@@ -14,20 +11,21 @@ export function renderNavbar(): void {
   if (!nav) return;
 
   nav.className =
-    'fixed top-0 left-0 w-full z-50 bg-dark/95 backdrop-blur border-b border-leather';
+    'fixed top-0 left-0 w-full z-50 bg-[#0a0500]/95 backdrop-blur border-b-2 border-gold/40';
 
   nav.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="#hero" class="flex items-center gap-2 group">
-        <img src="${CHUCK_AVATAR}" alt="Chuck" class="w-9 h-9 rounded-full border-2 border-gold object-cover group-hover:scale-110 transition-transform" />
-        <span class="font-western text-gold text-lg tracking-wide">CHUCK<span class="text-wheat">CALENDAR</span></span>
+      <!-- Logo -->
+      <a href="#hero" class="group">
+        <span class="font-western text-gold text-lg tracking-wide block leading-tight">CALENDRIER ACN</span>
+        <span class="text-wheat/40 text-[0.6rem] tracking-[0.15em] uppercase block">L'ère de Chuck Norris</span>
       </a>
 
       <!-- Desktop links -->
       <ul class="hidden md:flex gap-6 items-center">
         ${NAV_LINKS.map(
           (l) =>
-            `<li><a href="${l.href}" class="nav-link text-wheat hover:text-gold transition-colors duration-200 font-body text-sm">${l.label}</a></li>`
+            `<li><a href="${l.href}" class="nav-link text-wheat/50 hover:text-gold transition-colors duration-200 font-body text-xs uppercase tracking-[0.1em]">${l.label}</a></li>`
         ).join('')}
       </ul>
 
@@ -40,14 +38,15 @@ export function renderNavbar(): void {
     </div>
 
     <!-- Mobile dropdown -->
-    <ul id="nav-mobile" class="md:hidden hidden flex-col gap-2 px-4 pb-4 bg-dark/95 border-b border-leather">
+    <ul id="nav-mobile" class="md:hidden hidden flex-col gap-2 px-4 pb-4 bg-[#0a0500]/95 border-b border-gold/20">
       ${NAV_LINKS.map(
         (l) =>
-          `<li><a href="${l.href}" class="nav-link block py-2 text-wheat hover:text-gold transition-colors duration-200 font-body">${l.label}</a></li>`
+          `<li><a href="${l.href}" class="nav-link block py-2 text-wheat/50 hover:text-gold transition-colors duration-200 font-body text-sm uppercase tracking-[0.1em]">${l.label}</a></li>`
       ).join('')}
     </ul>
   `;
 
+  // Hamburger toggle
   const toggle = document.getElementById('nav-toggle');
   const mobile = document.getElementById('nav-mobile');
   toggle?.addEventListener('click', () => {
@@ -55,6 +54,7 @@ export function renderNavbar(): void {
     mobile?.classList.toggle('flex');
   });
 
+  // Close mobile menu on link click
   mobile?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => {
       mobile.classList.add('hidden');
@@ -62,6 +62,7 @@ export function renderNavbar(): void {
     });
   });
 
+  // Smooth scroll
   nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
@@ -70,6 +71,7 @@ export function renderNavbar(): void {
     });
   });
 
+  // Active link highlighting via IntersectionObserver
   const sections = NAV_LINKS.map((l) =>
     document.querySelector(l.href)
   ).filter(Boolean) as Element[];
@@ -84,10 +86,10 @@ export function renderNavbar(): void {
           navLinks.forEach((link) => {
             if (link.getAttribute('href') === `#${id}`) {
               link.classList.add('text-gold');
-              link.classList.remove('text-wheat');
+              link.classList.remove('text-wheat/50');
             } else {
               link.classList.remove('text-gold');
-              link.classList.add('text-wheat');
+              link.classList.add('text-wheat/50');
             }
           });
         }
