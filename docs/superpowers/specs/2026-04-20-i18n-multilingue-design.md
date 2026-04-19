@@ -86,7 +86,11 @@ export function initI18n(): void;
 ```
 
 - `t(key)` : accède aux chaînes UI via une clé pointée (`'navbar.opening'`, `'hero.subtitle'`, etc.)
-- Pour le contenu structuré (calendrier, mémorial, citations) : helpers dédiés qui retournent les structures typées de la langue active, ex. `getCalendarContent(): Record<string, CalendarEntry>`
+- Pour le contenu structuré (calendrier, mémorial, citations, blagues) : helpers dédiés qui retournent les structures typées de la langue active :
+  - `getCalendarContent(): Record<string, CalendarEntry>`
+  - `getJokesContent(): Joke[]`
+  - `getQuotesContent(): Quote[]`
+  - `getMemorialContent(): MemorialContent`
 - `onLanguageChange` : abonnement, utilisé par les composants pour se re-render
 
 ### Flow runtime
@@ -137,7 +141,7 @@ export function initI18n(): void;
 
 4 SVG inline minimalistes en ratio 4:3, ~24px de haut, dans `languages.ts` :
 - 🇫🇷 : 3 bandes verticales `#0055A4` / `#FFFFFF` / `#EF4135`
-- 🇬🇧 : Union Jack simplifié (fond bleu + croix blanche/rouge)
+- 🇬🇧 : Union Jack simplifié (fond bleu + croix blanche/rouge) — anglais britannique pour la variante `en`
 - 🇪🇸 : 3 bandes horizontales `#AA151B` / `#F1BF00` / `#AA151B` (sans armoiries)
 - 🇨🇳 : fond `#EE1C25` + 5 étoiles jaunes (1 grande + 4 petites)
 
@@ -156,7 +160,10 @@ L'implémentation se fait en **2 phases au sein de la même branche/PR** :
 - Sélecteur drapeaux dans le navbar (desktop + mobile)
 - Déplacement des fichiers de contenu vers la structure `src/i18n/<domaine>/fr.ts`
 - Traduction complète **EN, ES, ZH** pour : UI navbar, hero, mémorial, paroles-exploits (quotes/jokes), footer, séparateurs, video-gallery
-- Pour le calendrier : EN/ES/ZH affichent un **fallback explicite** (« Daily content available in French only — translation in progress »), le contenu FR reste accessible en switchant la langue
+- Pour le calendrier : EN/ES/ZH affichent un **fallback explicite traduit dans chaque langue** (clés UI `calendar.fallback.title` + `calendar.fallback.message`), le contenu FR reste accessible en switchant la langue. Exemples :
+  - EN : « Daily content coming soon — available in French for now »
+  - ES : « Contenido diario próximamente — disponible en francés por ahora »
+  - ZH : « 每日内容即将推出 — 目前仅提供法语版本 »
 
 **Critère de fin Phase 1** : le site est entièrement utilisable dans les 4 langues, sauf le contenu du calendrier qui reste en FR avec un message clair.
 
