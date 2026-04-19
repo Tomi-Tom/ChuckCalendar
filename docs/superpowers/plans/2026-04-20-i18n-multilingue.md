@@ -282,20 +282,20 @@ export const ui = {
   'calendar.fallback.title': 'Contenu quotidien à venir',
   'calendar.fallback.message': 'Le contenu détaillé pour cette langue est en cours de traduction. Vous pouvez consulter la version française en cliquant sur le drapeau 🇫🇷.',
 
-  // Calendar — noms des 13 mois ACN
-  'calendar.month.1': 'Roundhouse',
-  'calendar.month.2': 'Texas',
-  'calendar.month.3': 'Karaté',
-  'calendar.month.4': 'Norris',
-  'calendar.month.5': 'Walker',
-  'calendar.month.6': 'Delta',
-  'calendar.month.7': 'Ranger',
-  'calendar.month.8': 'Cobra',
-  'calendar.month.9': 'Justice',
-  'calendar.month.10': 'Légende',
-  'calendar.month.11': 'Honneur',
-  'calendar.month.12': 'Liberté',
-  'calendar.month.13': 'Éternité',
+  // Calendar — noms des 13 mois ACN (jeux de mots français, NOMS PROPRES — identiques dans toutes les langues)
+  'calendar.month.1': 'Janorris',
+  'calendar.month.2': 'Févriaire',
+  'calendar.month.3': 'Marsial',
+  'calendar.month.4': 'Avrilanche',
+  'calendar.month.5': 'Maistral',
+  'calendar.month.6': 'Juingler',
+  'calendar.month.7': 'Juillecoup',
+  'calendar.month.8': 'Aoûtlaw',
+  'calendar.month.9': 'Septembare',
+  'calendar.month.10': 'Octobrave',
+  'calendar.month.11': 'Novembrise',
+  'calendar.month.12': 'Décembrase',
+  'calendar.month.13': 'Chucknorembre',
 
   // Footer
   'footer.tribute': '★ À la mémoire éternelle de Chuck Norris ★',
@@ -313,7 +313,7 @@ export const ui = {
 export type UIKey = keyof typeof ui;
 ```
 
-> ⚠️ **Important** : les noms ACN des mois ci-dessus sont indicatifs. Si le code existant définit déjà ces noms dans `src/calendar.ts`, **conserver les noms exacts utilisés** dans le code. Vérifier `ACN_MONTH_NAMES` avant de figer cette task.
+> ✅ **Vérifié** : ces noms correspondent exactement à `ACN_MONTH_NAMES` dans `src/calendar.ts`. Ce sont des noms propres du calendrier ACN (jeux de mots français mêlant le nom du mois et un thème Chuck Norris) : on **ne les traduit pas**, on les garde identiques dans EN, ES et ZH.
 
 - [ ] **Step 2 : Créer les 3 autres dictionnaires (EN, ES, ZH) avec les mêmes clés**
 
@@ -373,19 +373,20 @@ export const ui: Record<UIKey, string> = {
   'calendar.badge.anecdote': 'ANECDOTE',
   'calendar.fallback.title': 'Daily content coming soon',
   'calendar.fallback.message': 'Detailed content for this language is being translated. You can browse the French version by clicking the 🇫🇷 flag.',
-  'calendar.month.1': 'Roundhouse',
-  'calendar.month.2': 'Texas',
-  'calendar.month.3': 'Karate',
-  'calendar.month.4': 'Norris',
-  'calendar.month.5': 'Walker',
-  'calendar.month.6': 'Delta',
-  'calendar.month.7': 'Ranger',
-  'calendar.month.8': 'Cobra',
-  'calendar.month.9': 'Justice',
-  'calendar.month.10': 'Legend',
-  'calendar.month.11': 'Honor',
-  'calendar.month.12': 'Liberty',
-  'calendar.month.13': 'Eternity',
+  // Mois ACN — noms propres, IDENTIQUES à fr.ts
+  'calendar.month.1': 'Janorris',
+  'calendar.month.2': 'Févriaire',
+  'calendar.month.3': 'Marsial',
+  'calendar.month.4': 'Avrilanche',
+  'calendar.month.5': 'Maistral',
+  'calendar.month.6': 'Juingler',
+  'calendar.month.7': 'Juillecoup',
+  'calendar.month.8': 'Aoûtlaw',
+  'calendar.month.9': 'Septembare',
+  'calendar.month.10': 'Octobrave',
+  'calendar.month.11': 'Novembrise',
+  'calendar.month.12': 'Décembrase',
+  'calendar.month.13': 'Chucknorembre',
   'footer.tribute': '★ In eternal memory of Chuck Norris ★',
   'footer.identity': 'Carlos Ray Norris — March 10, 1940, Ryan, Oklahoma — March 19, 2026, Kauai, Hawaii — 86 years old',
   'footer.calendar': 'ACN Calendar — Era After Chuck Norris',
@@ -397,7 +398,7 @@ export const ui: Record<UIKey, string> = {
 };
 ```
 
-Faire de même pour `es.ts` (espagnol castillan) et `zh.ts` (chinois simplifié). Pour ZH, garder les noms ACN des mois en français (`Roundhouse`, `Texas`, etc.) car ce sont des noms propres ; traduire uniquement les libellés narratifs.
+Faire de même pour `es.ts` (espagnol castillan) et `zh.ts` (chinois simplifié). **Dans ES et ZH, garder les 13 noms `calendar.month.*` strictement identiques à FR** (ce sont des noms propres du calendrier ACN, pas du contenu à traduire). Traduire uniquement les libellés narratifs et les chaînes UI.
 
 - [ ] **Step 3 : Créer le router `src/i18n/ui/index.ts`**
 
@@ -884,11 +885,11 @@ export function renderHero(): void {
 }
 ```
 
-> Note : `getQuotesContent()` n'existe pas encore — sera créé en Task 14. Cette task ne builde pas isolément ; elle dépend de Task 14.
+> Note : `getQuotesContent()` n'existe pas encore — sera créé en **Task 8**. Cette task ne builde pas isolément ; elle dépend de Task 8.
 
-**👉 Réordonner : Task 14 doit être faite AVANT Task 7. Voir réordonnancement en fin de plan.**
+**👉 Réordonner : Task 8 doit être faite AVANT Task 7. Voir réordonnancement en fin de plan.**
 
-- [ ] **Step 2 : Vérifier le build (après que Task 14 soit faite)**
+- [ ] **Step 2 : Vérifier le build (après que Task 8 soit faite)**
 
 ```bash
 npm run build && npm run dev
@@ -1644,9 +1645,13 @@ git commit -m "refactor(hero,footer): translate month names via t()"
 
 - [ ] **Step 1 : Vérifier qu'aucun composant ne les importe encore**
 
+Utiliser Grep dans l'éditeur (ou rg en CLI) sur les patterns `../quotes`, `../jokes`, `../memorial`, `../videos`, `../calendar-content` dans `src/`. Tous les imports doivent désormais pointer vers `../i18n/...`.
+
 ```bash
+# Exemple ripgrep pour confirmer qu'il ne reste aucun import vers les anciens fichiers :
+rg "from ['\"]\.\.?/(quotes|jokes|memorial|videos|calendar-content)['\"]" src/
 ```
-Utiliser Grep dans l'éditeur sur les chemins `../quotes`, `../jokes`, `../memorial`, `../videos`, `../calendar-content` dans `src/`. Tous les imports doivent désormais pointer vers `../i18n/...`.
+Attendu : aucun résultat.
 
 - [ ] **Step 2 : Supprimer les fichiers**
 
@@ -1760,21 +1765,34 @@ Idem que B mais sur `src/i18n/calendar/zh.ts`. Pour le chinois, **garder une att
 
 - [ ] **Step 1 : Vérifier que les 4 dictionnaires ont le même nombre de clés**
 
-Smoke test en console navigateur :
-```js
-// Dans devtools console une fois l'app chargée :
-import('./src/i18n/calendar/fr.js').then(m => console.log('FR:', Object.keys(m.calendarContent).length));
-// (utiliser un script ad hoc côté Node si besoin)
-```
-Ou un mini script Node :
+Approche 1 (rapide, sans dépendance) — compter les déclarations d'entrées via ripgrep :
 ```bash
-node -e "
-const fr = require('./src/i18n/calendar/fr.ts');
-const en = require('./src/i18n/calendar/en.ts');
-console.log('FR:', Object.keys(fr.calendarContent).length, 'EN:', Object.keys(en.calendarContent).length);
+for f in src/i18n/calendar/{fr,en,es,zh}.ts; do
+  echo -n "$f: "
+  rg -c "^\s+'\d+-\d+':" "$f"
+done
+```
+Attendu : les 4 fichiers retournent le même nombre (366 si on inclut `0-1`, `0-2` + 13×28).
+
+Approche 2 (plus propre) — petit script via tsx :
+```bash
+npx tsx -e "
+import('./src/i18n/calendar/fr.ts').then(fr =>
+  import('./src/i18n/calendar/en.ts').then(en =>
+    import('./src/i18n/calendar/es.ts').then(es =>
+      import('./src/i18n/calendar/zh.ts').then(zh =>
+        console.log({
+          fr: Object.keys(fr.calendarContent).length,
+          en: Object.keys(en.calendarContent).length,
+          es: Object.keys(es.calendarContent).length,
+          zh: Object.keys(zh.calendarContent).length,
+        })
+      )
+    )
+  )
+);
 "
 ```
-(Si Node ne lit pas TS directement, utiliser `tsx` ou faire un check manuel.)
 
 - [ ] **Step 2 : Simplifier `getCalendarEntry` — fallback final pointe sur FR**
 
@@ -1825,7 +1843,7 @@ L'ordre logique d'exécution diffère légèrement de l'ordre numérique. Voici 
 ```
 1 → 2 → 3 → 4 → 5 → 6  (infrastructure : i18n, switcher, navbar)
      ↓
-8 → 9 → 7  (quotes/jokes traduits AVANT hero qui les utilise)
+8 → 9 → 7  (quotes (Task 8) + jokes (Task 9) traduits AVANT hero (Task 7) qui consomme getQuotesContent())
      ↓
 10 → 11    (paroles + separator)
      ↓
