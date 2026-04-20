@@ -1,9 +1,12 @@
-import { videos } from '../videos';
+import { getVideosContent } from '../i18n/videos';
+import { t } from '../i18n';
 import { CHUCK_HERO, CHUCK_ACTION, CHUCK_AVATAR } from '../chuck-images';
 
 export function renderVideos(): void {
   const section = document.getElementById('videos');
   if (!section) return;
+
+  const videos = getVideosContent();
 
   const cardsHTML = videos
     .map(
@@ -46,13 +49,13 @@ export function renderVideos(): void {
         <span class="text-gold text-2xl">★</span>
       </div>
 
-      <p class="text-xs tracking-[0.3em] uppercase text-wheat/40 text-center mb-1">Acte III</p>
+      <p class="text-xs tracking-[0.3em] uppercase text-wheat/40 text-center mb-1">${t('videos.act')}</p>
       <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-4 tracking-wider"
           style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
-        En Action
+        ${t('videos.title')}
       </h2>
       <p class="text-center text-wheat/50 font-body text-sm mb-12 italic">
-        Les scènes que même Chuck Norris regarde en boucle
+        ${t('videos.subtitle')}
       </p>
 
       <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
