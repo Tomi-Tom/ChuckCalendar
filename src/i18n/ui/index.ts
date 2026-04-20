@@ -8,8 +8,12 @@ import { ui as fr } from './fr';
 import { ui as en } from './en';
 import { ui as es } from './es';
 import { ui as zh } from './zh';
+import { ui as ko } from './ko';
+import { ui as ja } from './ja';
+import { ui as it } from './it';
+import { ui as de } from './de';
 
-const dicts = { fr, en, es, zh } as const;
+const dicts = { fr, en, es, zh, ko, ja, it, de } as const;
 
 export function t(key: UIKey): string {
   const dict = dicts[getLanguage()];

@@ -3,8 +3,12 @@ import { fallbackJokes as fr } from './fr';
 import { fallbackJokes as en } from './en';
 import { fallbackJokes as es } from './es';
 import { fallbackJokes as zh } from './zh';
+import { fallbackJokes as ko } from './ko';
+import { fallbackJokes as ja } from './ja';
+import { fallbackJokes as it } from './it';
+import { fallbackJokes as de } from './de';
 
-const dicts = { fr, en, es, zh } as const;
+const dicts = { fr, en, es, zh, ko, ja, it, de } as const;
 
 export function getJokesContent(): string[] {
   return dicts[getLanguage()];

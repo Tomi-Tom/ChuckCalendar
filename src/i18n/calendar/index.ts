@@ -3,8 +3,12 @@ import { calendarContent as fr, type CalendarEntry, type ContentType } from './f
 import { calendarContent as en } from './en';
 import { calendarContent as es } from './es';
 import { calendarContent as zh } from './zh';
+import { calendarContent as ko } from './ko';
+import { calendarContent as ja } from './ja';
+import { calendarContent as it } from './it';
+import { calendarContent as de } from './de';
 
-const dicts = { fr, en, es, zh } as const;
+const dicts = { fr, en, es, zh, ko, ja, it, de } as const;
 
 export function getCalendarContent(): Record<string, CalendarEntry> {
   return dicts[getLanguage()];

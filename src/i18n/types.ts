@@ -1,4 +1,4 @@
-export const LANGUAGE_CODES = ['fr', 'en', 'es', 'zh'] as const;
+export const LANGUAGE_CODES = ['fr', 'en', 'es', 'zh', 'ko', 'ja', 'it', 'de'] as const;
 export type LanguageCode = typeof LANGUAGE_CODES[number];
 
 export function isLanguageCode(value: unknown): value is LanguageCode {
