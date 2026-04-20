@@ -10,6 +10,9 @@ export function renderFooter(): void {
   document.querySelector('footer[data-footer="true"]')?.remove();
 
   const today = getTodayACN();
+  const dateLine = today.isChuckDay
+    ? `${t('hero.day_of_chuck')} ${today.chuckDayNumber}, ${t('hero.year_acn')} ${today.year} ${t('hero.year_acn_suffix')}`
+    : `${today.day} ${t(`calendar.month.${today.month}` as Parameters<typeof t>[0])} ${t('hero.year_acn')} ${today.year} ${t('hero.year_acn_suffix')}`;
 
   const footer = document.createElement('footer');
   footer.setAttribute('data-footer', 'true');
@@ -24,7 +27,7 @@ export function renderFooter(): void {
     <p class="text-lg font-western text-wheat/90 mb-2">${t('footer.tribute')}</p>
     <p class="text-sm text-wheat/60 mb-1">${t('footer.identity')}</p>
     <p class="mb-3">${t('footer.calendar')}</p>
-    <p class="text-sm text-wheat/50 mb-4">${today.day} ${today.monthName} ${t('hero.year_acn')} ${today.year} ${t('hero.year_acn_suffix')}</p>
+    <p class="text-sm text-wheat/50 mb-4">${dateLine}</p>
     <p class="text-xs text-wheat/30 italic mb-6">${t('footer.quote')}</p>
     <div class="flex justify-center gap-3 opacity-50">
       <img src="${CHUCK_YOUNG}" class="w-8 h-8 rounded-full object-cover border border-gold/30" alt="1976" title="1976" />

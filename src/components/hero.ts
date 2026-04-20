@@ -36,7 +36,7 @@ export function renderHero(): void {
   const today = getTodayACN();
   const dateDisplay = today.isChuckDay
     ? `${t('hero.day_of_chuck')} ${today.chuckDayNumber}, ${t('hero.year_acn')} ${today.year} ${t('hero.year_acn_suffix')}`
-    : `${today.day} ${today.monthName}, ${t('hero.year_acn')} ${today.year} ${t('hero.year_acn_suffix')}`;
+    : `${today.day} ${t(`calendar.month.${today.month}` as Parameters<typeof t>[0])}, ${t('hero.year_acn')} ${today.year} ${t('hero.year_acn_suffix')}`;
 
   const time = getTimeSinceDeath();
   const quotes = getQuotesContent();
