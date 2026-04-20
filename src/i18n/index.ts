@@ -72,3 +72,5 @@ export function initI18n(): void {
 // Re-export pour ergonomie
 export { LANGUAGES } from './languages';
 export type { LanguageCode } from './types';
+export { t } from './ui';
+export type { UIKey } from './ui';
