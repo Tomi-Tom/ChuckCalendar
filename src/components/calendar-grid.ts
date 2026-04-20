@@ -1,10 +1,18 @@
 import {
-  ACN_MONTH_NAMES,
   getTodayACN,
   getMonthDays,
   getChuckDaysCount,
 } from '../calendar';
 import { getCalendarEntry, type ContentType } from '../i18n/calendar';
+import { t } from '../i18n';
+
+function getMonthName(monthNumber: number): string {
+  return t(`calendar.month.${monthNumber}` as Parameters<typeof t>[0]);
+}
+
+function getTypeLabel(type: ContentType): string {
+  return t(`calendar.badge.${type}` as Parameters<typeof t>[0]);
+}
 
 let currentYear = 1;
 let viewMode: 'annual' | 'month' = 'annual';
@@ -21,12 +29,6 @@ const TYPE_BADGE_CLASS: Record<ContentType, string> = {
   fact: 'badge-fact',
   citation: 'badge-citation',
   anecdote: 'badge-anecdote',
-};
-
-const TYPE_LABEL: Record<ContentType, string> = {
-  fact: 'FACT',
-  citation: 'CITATION',
-  anecdote: 'ANECDOTE',
 };
 
 const TYPE_BORDER: Record<ContentType, string> = {
@@ -93,16 +95,17 @@ function updateNav(navEl: HTMLElement, container: HTMLElement, today: ReturnType
                 class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer${currentYear <= 1 ? ' opacity-30 pointer-events-none' : ''}">
           &lt;
         </button>
-        <span class="font-western text-gold text-2xl md:text-3xl">An ${currentYear}</span>
+        <span class="font-western text-gold text-2xl md:text-3xl">${t('calendar.year_label')} ${currentYear}</span>
         <button id="year-next"
                 class="border border-gold text-gold px-4 py-2 rounded font-western text-lg hover:bg-gold/20 transition-colors cursor-pointer">
           &gt;
         </button>
       </div>`;
   } else {
-    const monthName = ACN_MONTH_NAMES[selectedMonth - 1];
-    const monthSelectorHTML = ACN_MONTH_NAMES.map((name, i) => {
+    const monthName = getMonthName(selectedMonth);
+    const monthSelectorHTML = Array.from({ length: 13 }, (_, i) => {
       const m = i + 1;
+      const name = getMonthName(m);
       const isActive = m === selectedMonth;
       return `<button class="month-sel-btn px-2 py-1 rounded text-[0.6rem] transition-all whitespace-nowrap ${
         isActive ? 'bg-gold/20 text-gold border border-gold/40' : 'text-wheat/40 hover:text-gold'
@@ -113,7 +116,7 @@ function updateNav(navEl: HTMLElement, container: HTMLElement, today: ReturnType
       <div class="flex items-center justify-center gap-6 mb-6">
         ${renderViewSwitch()}
         <button id="month-prev" class="text-gold hover:text-wheat transition-colors cursor-pointer text-lg font-western${selectedMonth <= 1 ? ' opacity-30 pointer-events-none' : ''}">&lt;</button>
-        <h3 class="font-western text-gold text-2xl md:text-3xl text-center tracking-wider min-w-[200px]">${monthName} — An ${currentYear}</h3>
+        <h3 class="font-western text-gold text-2xl md:text-3xl text-center tracking-wider min-w-[200px]">${monthName} — ${t('calendar.year_label')} ${currentYear}</h3>
         <button id="month-next" class="text-gold hover:text-wheat transition-colors cursor-pointer text-lg font-western${selectedMonth >= 13 ? ' opacity-30 pointer-events-none' : ''}">&gt;</button>
       </div>
       <div class="flex gap-1 overflow-x-auto pb-2 mb-6 scrollbar-none justify-center flex-wrap">
@@ -140,21 +143,21 @@ function renderHeader(): string {
   return `
     <h2 class="font-western text-gold text-4xl md:text-5xl text-center mb-2"
         style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
-      Le Calendrier Sacré
+      ${t('calendar.title')}
     </h2>
-    <p class="text-center text-wheat/50 font-body text-sm mb-6 italic">13 mois. 28 jours. Le seul calendrier approuvé par Chuck.</p>
+    <p class="text-center text-wheat/50 font-body text-sm mb-6 italic">${t('calendar.tagline')}</p>
     <div class="flex items-center justify-center gap-6 mb-8">
       <div class="flex items-center gap-1.5">
         <div class="w-2.5 h-2.5 rounded-full dot-fact"></div>
-        <span class="text-wheat/60 text-xs">Fact</span>
+        <span class="text-wheat/60 text-xs">${t('calendar.legend.fact')}</span>
       </div>
       <div class="flex items-center gap-1.5">
         <div class="w-2.5 h-2.5 rounded-full dot-citation"></div>
-        <span class="text-wheat/60 text-xs">Citation</span>
+        <span class="text-wheat/60 text-xs">${t('calendar.legend.citation')}</span>
       </div>
       <div class="flex items-center gap-1.5">
         <div class="w-2.5 h-2.5 rounded-full dot-anecdote"></div>
-        <span class="text-wheat/60 text-xs">Anecdote</span>
+        <span class="text-wheat/60 text-xs">${t('calendar.legend.anecdote')}</span>
       </div>
     </div>`;
 }
@@ -163,11 +166,11 @@ function renderViewSwitch(): string {
   const isAnnual = viewMode === 'annual';
   return `
     <button id="view-switch" class="flex items-center gap-2 border border-gold/30 rounded-lg px-3 py-1.5 text-xs hover:bg-gold/10 transition-all cursor-pointer">
-      <span class="${isAnnual ? 'text-gold' : 'text-wheat/40'}">Année</span>
+      <span class="${isAnnual ? 'text-gold' : 'text-wheat/40'}">${t('calendar.view.year')}</span>
       <div class="w-8 h-4 rounded-full relative bg-gold/20">
         <div class="absolute top-0.5 w-3 h-3 rounded-full bg-gold transition-all ${isAnnual ? 'left-0.5' : 'left-4'}"></div>
       </div>
-      <span class="${!isAnnual ? 'text-gold' : 'text-wheat/40'}">Mois</span>
+      <span class="${!isAnnual ? 'text-gold' : 'text-wheat/40'}">${t('calendar.view.month')}</span>
     </button>`;
 }
 
@@ -182,7 +185,7 @@ function renderChuckDays(): string {
     html += `
       <div class="inline-flex items-center gap-2 bg-gold/15 border border-gold/40 rounded-lg px-4 py-2 cursor-pointer hover:bg-gold/25 transition-all"
            data-chuck-day="${d}">
-        <span class="text-gold font-western text-sm">Jour de Chuck${d > 1 ? ` ${d}` : ''}</span>
+        <span class="text-gold font-western text-sm">${t('hero.day_of_chuck')}${d > 1 ? ` ${d}` : ''}</span>
         <div class="w-2 h-2 rounded-full dot-anecdote"></div>
       </div>`;
   }
@@ -194,7 +197,7 @@ function renderChuckDays(): string {
 function renderAnnualContent(today: ReturnType<typeof getTodayACN>): string {
   let monthsHTML = '';
   for (let m = 1; m <= 13; m++) {
-    const monthName = ACN_MONTH_NAMES[m - 1];
+    const monthName = getMonthName(m);
     const days = getMonthDays(currentYear, m);
     const isCurrentMonth = !today.isChuckDay && today.year === currentYear && today.month === m;
 
@@ -349,8 +352,8 @@ function renderModalHTML(): string {
             <p id="cal-modal-source" class="text-wheat/50 text-sm mt-2 pl-4"></p>
           </div>
           <div class="flex justify-between text-wheat/40 text-sm">
-            <button id="cal-modal-prev" class="hover:text-gold transition-colors cursor-pointer">&larr; Jour précédent</button>
-            <button id="cal-modal-next" class="hover:text-gold transition-colors cursor-pointer">Jour suivant &rarr;</button>
+            <button id="cal-modal-prev" class="hover:text-gold transition-colors cursor-pointer">${t('calendar.modal.prev_day')}</button>
+            <button id="cal-modal-next" class="hover:text-gold transition-colors cursor-pointer">${t('calendar.modal.next_day')}</button>
           </div>
         </div>
       </div>
@@ -394,11 +397,11 @@ function showModal(month: number, day: number, container: HTMLElement, today: Re
   if (!modal || !badge || !dateEl || !textEl || !sourceEl) return;
 
   badge.className = `px-3 py-1 rounded text-xs font-bold uppercase tracking-wider ${TYPE_BADGE_CLASS[entry.type]}`;
-  badge.textContent = TYPE_LABEL[entry.type];
+  badge.textContent = getTypeLabel(entry.type);
 
   dateEl.textContent = month === 0
-    ? `Jour de Chuck ${day}, An ${currentYear} ACN`
-    : `${day} ${ACN_MONTH_NAMES[month - 1]}, An ${currentYear} ACN`;
+    ? `${t('hero.day_of_chuck')} ${day}, ${t('calendar.year_label')} ${currentYear} ACN`
+    : `${day} ${getMonthName(month)}, ${t('calendar.year_label')} ${currentYear} ACN`;
 
   textEl.className = `italic text-wheat text-lg leading-relaxed border-l-3 ${TYPE_BORDER[entry.type]} pl-4`;
   textEl.textContent = entry.text;
