@@ -4,73 +4,73 @@ export type { TimelineEvent };
 export const timeline: TimelineEvent[] = [
   {
     year: '1940',
-    title: 'Birth of a legend',
-    description: 'Carlos Ray Norris is born in Ryan, Oklahoma. The world does not yet know it, but it has just changed forever.',
+    title: 'Geburt einer Legende',
+    description: 'Carlos Ray Norris wird in Ryan, Oklahoma, geboren. Die Welt weiß es noch nicht, aber sie hat sich gerade für immer verändert.',
   },
   {
     year: '1958',
-    title: 'The warrior awakens',
-    description: 'He enlists in the US Air Force. In South Korea, he discovers Tang Soo Do — the beginning of a martial journey without equal.',
+    title: 'Das Erwachen des Kriegers',
+    description: 'Er tritt der US Air Force bei. In Südkorea entdeckt er Tang Soo Do — der Beginn eines martialischen Weges ohnegleichen.',
   },
   {
     year: '1968',
-    title: 'World Karate Champion',
-    description: 'Professional Middleweight World Champion. Chuck Norris does not win fights, he ends them.',
+    title: 'Karate-Weltmeister',
+    description: 'Professional-Middleweight-Weltmeister. Chuck Norris gewinnt Kämpfe nicht, er beendet sie.',
   },
   {
     year: '1969–1974',
-    title: 'Six-time world champion',
-    description: 'Six consecutive world titles. No one dares challenge him. Retirement is not a defeat, it is an act of mercy.',
+    title: 'Sechsfacher Weltmeister',
+    description: 'Sechs aufeinanderfolgende Weltmeistertitel. Niemand wagt es, ihn herauszufordern. Der Rücktritt ist keine Niederlage, er ist ein Akt der Gnade.',
   },
   {
     year: '1972',
     title: 'Way of the Dragon',
-    description: 'Film debut opposite Bruce Lee in "Way of the Dragon". The Colosseum of Rome trembles under their blows.',
+    description: 'Filmdebüt an der Seite von Bruce Lee in „Way of the Dragon". Das Kolosseum von Rom erbebt unter ihren Schlägen.',
   },
   {
     year: '1977',
     title: 'Breaker! Breaker!',
-    description: 'First leading role in "Breaker! Breaker!". Hollywood discovers that Chuck Norris needs no stunt double.',
+    description: 'Erste Hauptrolle in „Breaker! Breaker!". Hollywood entdeckt, dass Chuck Norris kein Stuntdouble benötigt.',
   },
   {
     year: '1984',
     title: 'Missing in Action',
-    description: '"Missing in Action" — Chuck Norris becomes an action film icon. Villains across the world start to tremble.',
+    description: '„Missing in Action" — Chuck Norris wird zur Ikone des Actionfilms. Die Bösewichte der ganzen Welt beginnen zu zittern.',
   },
   {
     year: '1985',
-    title: 'Peak of action cinema',
-    description: '"Invasion U.S.A." and "Code of Silence" — the peak of action cinema. Chuck Norris does not play a hero, he is the hero.',
+    title: 'Höhepunkt des Actionkinos',
+    description: '„Invasion U.S.A." und „Code of Silence" — der Höhepunkt des Actionkinos. Chuck Norris spielt keinen Helden, er ist der Held.',
   },
   {
     year: '1993–2001',
     title: 'Walker, Texas Ranger',
-    description: '"Walker, Texas Ranger" — 8 seasons, 203 episodes. The cult series where justice is delivered with roundhouse kicks.',
+    description: '„Walker, Texas Ranger" — 8 Staffeln, 203 Folgen. Die Kultserie, in der die Gerechtigkeit mit Roundhouse-Kicks durchgesetzt wird.',
   },
   {
     year: '2005',
-    title: 'The Chuck Norris Facts',
-    description: 'The "Chuck Norris Facts" become a worldwide Internet phenomenon. The truth about Chuck Norris finally spreads.',
+    title: 'Die Chuck Norris Facts',
+    description: 'Die „Chuck Norris Facts" werden zu einem weltweiten Internetphänomen. Die Wahrheit über Chuck Norris verbreitet sich endlich.',
   },
   {
     year: '2012',
     title: 'The Expendables 2',
-    description: '"The Expendables 2" — an epic return to the screen. Even among the toughest, Chuck Norris stands above.',
+    description: '„The Expendables 2" — epische Rückkehr auf die Leinwand. Selbst unter den Härtesten steht Chuck Norris über allen.',
   },
   {
-    year: '2026 (Year 1 ACN)',
-    title: 'The Chuck Norris Era begins',
-    description: 'On the morning of March 19, 2026, Chuck Norris passes away in Kauai, Hawaii, at the age of 86. The next day, the ACN era (After Chuck Norris) begins — the calendar resets in his honor.',
+    year: '2026 (Jahr 1 ACN)',
+    title: 'Das Chuck-Norris-Zeitalter beginnt',
+    description: 'Am Morgen des 19. März 2026 stirbt Chuck Norris in Kauai, Hawaii, im Alter von 86 Jahren. Am Tag darauf beginnt die ACN-Ära (Nach Chuck Norris) — der Kalender wird ihm zu Ehren zurückgesetzt.',
   },
 ];
 
 export const bio: string =
-  `Chuck Norris is not merely an actor or a martial artist. He is a force of nature, ` +
-  `a phenomenon that defies the laws of physics, time, and mortality. Born Carlos Ray Norris ` +
-  `on the plains of Oklahoma, he has conquered the tatami mats, the silver screen, and the ` +
-  `collective imagination of all humanity. Six-time world karate champion, hero of dozens of ` +
-  `action films, legendary Texas ranger for eight seasons, he has forged a myth that even the ` +
-  `Internet could only celebrate through the Chuck Norris Facts. His legend knows no borders ` +
-  `nor temporal limits. For Chuck Norris does not age — time recedes before him. He does not ` +
-  `die — death itself dares not approach him. He is the alpha and the omega, the fist and the ` +
-  `wisdom, the man and the myth. Where others leave a legacy, Chuck Norris has left an era.`;
+  `Chuck Norris ist nicht einfach ein Schauspieler oder ein Kampfkünstler. Er ist eine Naturgewalt, ` +
+  `ein Phänomen, das die Gesetze der Physik, der Zeit und der Sterblichkeit herausfordert. Geboren als Carlos Ray Norris ` +
+  `in den Ebenen Oklahomas, hat er die Matten, die Kinoleinwände und die ` +
+  `kollektive Vorstellungskraft der gesamten Menschheit erobert. Sechsfacher Karate-Weltmeister, Held von Dutzenden ` +
+  `von Actionfilmen, legendärer Texas Ranger über acht Staffeln hinweg, hat er einen Mythos geschmiedet, den selbst das Internet ` +
+  `nur durch die Chuck Norris Facts feiern konnte. Seine Legende kennt weder Grenzen noch ` +
+  `zeitliche Schranken. Denn Chuck Norris altert nicht — die Zeit weicht vor ihm zurück. Er stirbt ` +
+  `nicht — der Tod selbst wagt es nicht, sich ihm zu nähern. Er ist das Alpha und das Omega, die Faust und die ` +
+  `Weisheit, der Mensch und der Mythos. Wo andere ein Vermächtnis hinterlassen, hat Chuck Norris ein Zeitalter hinterlassen.`;
