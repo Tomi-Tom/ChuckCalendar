@@ -1,4 +1,5 @@
 import "./style.css";
+import { initI18n, onLanguageChange } from "./i18n";
 import { renderNavbar } from "./components/navbar";
 import { renderHero } from "./components/hero";
 import { renderCalendar } from "./components/calendar-grid";
@@ -8,17 +9,24 @@ import { renderVideos } from "./components/video-gallery";
 import { renderFooter } from "./components/footer";
 import { renderSeparator } from "./components/section-separator";
 
-// Render all sections
-renderNavbar();
-renderHero();
-renderCalendar();
-renderMemorial();
-renderParolesExploits();
-renderVideos();
-renderFooter();
+initI18n();
 
-// Inject separators between sections
+function mountAll(): void {
+  renderNavbar();
+  renderHero();
+  renderCalendar();
+  renderMemorial();
+  renderParolesExploits();
+  renderVideos();
+  renderFooter();
+  injectSeparators();
+  initScrollAnimations();
+}
+
 function injectSeparators(): void {
+  // Retirer les séparateurs précédents avant d'en ré-injecter
+  document.querySelectorAll('[data-separator="true"]').forEach((el) => el.remove());
+
   const separators: [string, 'quote' | 'star' | 'film', number?][] = [
     ['hero', 'quote', 0],
     ['paroles', 'quote', 1],
@@ -30,28 +38,21 @@ function injectSeparators(): void {
     }
   }
 }
-injectSeparators();
 
-// ── Scroll fade-in animations ──
 function initScrollAnimations(): void {
   const sections = document.querySelectorAll('main > section');
-
-  sections.forEach((section) => {
-    section.classList.add('fade-in-section');
-  });
+  sections.forEach((section) => section.classList.add('fade-in-section'));
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     },
     { threshold: 0.1 }
   );
-
   sections.forEach((section) => observer.observe(section));
 }
 
-initScrollAnimations();
+mountAll();
+onLanguageChange(() => mountAll());
