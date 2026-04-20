@@ -39,11 +39,14 @@ function injectSeparators(): void {
   }
 }
 
+let scrollObserver: IntersectionObserver | null = null;
+
 function initScrollAnimations(): void {
+  scrollObserver?.disconnect();
   const sections = document.querySelectorAll('main > section');
   sections.forEach((section) => section.classList.add('fade-in-section'));
 
-  const observer = new IntersectionObserver(
+  scrollObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -51,8 +54,8 @@ function initScrollAnimations(): void {
     },
     { threshold: 0.1 }
   );
-  sections.forEach((section) => observer.observe(section));
+  sections.forEach((section) => scrollObserver!.observe(section));
 }
 
 mountAll();
-onLanguageChange(() => mountAll());
+onLanguageChange(mountAll);
