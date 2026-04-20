@@ -1,5 +1,5 @@
 import { LANGUAGES, getLanguage, setLanguage } from '../i18n';
-import { LANGUAGE_CODES } from '../i18n/types';
+import { LANGUAGE_CODES, isLanguageCode } from '../i18n/types';
 
 /**
  * Renvoie le HTML d'un sélecteur de langue (4 drapeaux).
@@ -31,13 +31,11 @@ export function renderLanguageSwitcher(compact = false): string {
  */
 export function bindLanguageSwitcherEvents(scope: Document | HTMLElement = document): void {
   scope.querySelectorAll<HTMLButtonElement>('.lang-switch-btn').forEach((btn) => {
-    // Évite les doubles bindings : retire l'éventuel ancien handler
-    btn.replaceWith(btn.cloneNode(true));
-  });
-  scope.querySelectorAll<HTMLButtonElement>('.lang-switch-btn').forEach((btn) => {
+    if (btn.dataset.bound === '1') return;
+    btn.dataset.bound = '1';
     btn.addEventListener('click', () => {
       const code = btn.dataset.lang;
-      if (code) setLanguage(code as ReturnType<typeof getLanguage>);
+      if (isLanguageCode(code)) setLanguage(code);
     });
   });
 }
