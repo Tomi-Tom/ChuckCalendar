@@ -1,4 +1,5 @@
-import { timeline, bio } from '../memorial';
+import { getMemorialContent } from '../i18n/memorial';
+import { t } from '../i18n';
 import { CHUCK_MEMORIAL, CHUCK_YOUNG, CHUCK_ACTION, CHUCK_MARINE, CHUCK_2007, CHUCK_2016, CHUCK_HERO, CHUCK_AVATAR } from '../chuck-images';
 
 // Map timeline events to appropriate photos
@@ -20,6 +21,8 @@ const TIMELINE_PHOTOS: Record<number, string> = {
 export function renderMemorial(): void {
   const section = document.getElementById('memorial');
   if (!section) return;
+
+  const { timeline, bio } = getMemorialContent();
 
   const timelineHTML = timeline
     .map(
@@ -62,14 +65,14 @@ export function renderMemorial(): void {
       </div>
 
       <!-- Section title -->
-      <p class="text-xs tracking-[0.3em] uppercase text-wheat/40 text-center mb-1">Acte I</p>
+      <p class="text-xs tracking-[0.3em] uppercase text-wheat/40 text-center mb-1">${t('memorial.act')}</p>
       <h2 class="font-western text-gold text-4xl md:text-6xl text-center mb-6 tracking-wider"
           style="text-shadow: 2px 4px 8px rgba(0,0,0,0.7);">
-        La Légende
+        ${t('memorial.title')}
       </h2>
       <p class="font-western text-wheat/80 text-xl md:text-2xl text-center mb-16"
          style="text-shadow: 1px 2px 4px rgba(0,0,0,0.5);">
-        La Légende Éternelle
+        ${t('memorial.subtitle')}
       </p>
 
       <!-- Chuck portrait gallery + Bio -->
@@ -117,7 +120,7 @@ export function renderMemorial(): void {
       <!-- Bottom tribute -->
       <div class="flex flex-col items-center gap-4 mt-20">
         <img src="${CHUCK_MEMORIAL}" class="w-20 h-20 rounded-full border-2 border-gold opacity-70 object-cover" alt="Chuck Norris" />
-        <p class="font-western text-gold/60 text-lg tracking-widest">REST IN POWER</p>
+        <p class="font-western text-gold/60 text-lg tracking-widest">${t('memorial.tribute')}</p>
         <div class="flex items-center gap-4">
           <span class="text-gold text-2xl">★</span>
           <div class="h-px w-24 bg-leather"></div>
