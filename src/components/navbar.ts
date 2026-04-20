@@ -9,9 +9,13 @@ const NAV_LINKS = [
   { key: 'navbar.link.videos', href: '#videos' },
 ] as const;
 
+let activeNavObserver: IntersectionObserver | null = null;
+
 export function renderNavbar(): void {
   const nav = document.getElementById('nav');
   if (!nav) return;
+
+  activeNavObserver?.disconnect();
 
   nav.className =
     'fixed top-0 left-0 w-full z-50 bg-[#0a0500]/95 backdrop-blur border-b-2 border-gold/40';
@@ -75,7 +79,7 @@ export function renderNavbar(): void {
   const sections = NAV_LINKS.map((l) => document.querySelector(l.href)).filter(Boolean) as Element[];
   const navLinks = nav.querySelectorAll<HTMLAnchorElement>('a.nav-link');
 
-  const observer = new IntersectionObserver(
+  activeNavObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -95,5 +99,5 @@ export function renderNavbar(): void {
     { rootMargin: '-20% 0px -70% 0px' }
   );
 
-  sections.forEach((s) => observer.observe(s));
+  sections.forEach((s) => activeNavObserver!.observe(s));
 }
