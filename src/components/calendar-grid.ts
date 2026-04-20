@@ -4,7 +4,7 @@ import {
   getMonthDays,
   getChuckDaysCount,
 } from '../calendar';
-import { getCalendarEntry, type ContentType } from '../calendar-content';
+import { getCalendarEntry, type ContentType } from '../i18n/calendar';
 
 let currentYear = 1;
 let viewMode: 'annual' | 'month' = 'annual';
