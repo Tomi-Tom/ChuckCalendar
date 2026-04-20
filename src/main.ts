@@ -1,5 +1,5 @@
 import "./style.css";
-import { initI18n, onLanguageChange } from "./i18n";
+import { initI18n, onLanguageChange, t } from "./i18n";
 import { renderNavbar } from "./components/navbar";
 import { renderHero } from "./components/hero";
 import { renderCalendar } from "./components/calendar-grid";
@@ -12,6 +12,7 @@ import { renderSeparator } from "./components/section-separator";
 initI18n();
 
 function mountAll(): void {
+  document.title = `${t('navbar.brand.title')} — ${t('navbar.brand.subtitle')}`;
   renderNavbar();
   renderHero();
   renderCalendar();
