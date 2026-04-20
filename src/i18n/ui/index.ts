@@ -1,3 +1,7 @@
+// Note: import depuis '../index' crée une dépendance circulaire douce
+// (src/i18n/index.ts re-exporte depuis ./ui). OK aujourd'hui car aucun
+// des deux modules n'évalue l'autre au top-level. Ne JAMAIS appeler t()
+// depuis du code top-level dans src/i18n/index.ts.
 import { getLanguage } from '../index';
 import type { UIKey } from './fr';
 import { ui as fr } from './fr';
@@ -16,5 +20,3 @@ export function t(key: UIKey): string {
   }
   return value;
 }
-
-export type { UIKey };

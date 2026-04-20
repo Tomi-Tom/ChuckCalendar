@@ -73,4 +73,4 @@ export function initI18n(): void {
 export { LANGUAGES } from './languages';
 export type { LanguageCode } from './types';
 export { t } from './ui';
-export type { UIKey } from './ui';
+export type { UIKey } from './ui/fr';
