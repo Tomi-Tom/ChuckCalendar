@@ -4,73 +4,74 @@ export type { TimelineEvent };
 export const timeline: TimelineEvent[] = [
   {
     year: '1940',
-    title: 'Birth of a legend',
-    description: 'Carlos Ray Norris is born in Ryan, Oklahoma. The world does not yet know it, but it has just changed forever.',
+    title: '伝説の誕生',
+    description: 'オクラホマ州ライアンでカルロス・レイ・ノリス誕生。世界はまだ知らないが、この日、世界は永遠に変わった。',
   },
   {
     year: '1958',
-    title: 'The warrior awakens',
-    description: 'He enlists in the US Air Force. In South Korea, he discovers Tang Soo Do — the beginning of a martial journey without equal.',
+    title: '戦士の覚醒',
+    description: 'アメリカ空軍に入隊。韓国で唐手道（タンスードー）と出会い、比類なき武道の道の第一歩を踏み出す。',
   },
   {
     year: '1968',
-    title: 'World Karate Champion',
-    description: 'Professional Middleweight World Champion. Chuck Norris does not win fights, he ends them.',
+    title: '世界空手チャンピオン',
+    description: 'プロフェッショナル・ミドル級世界チャンピオン。チャック・ノリスは試合に勝つのではない、試合を終わらせるのだ。',
   },
   {
     year: '1969–1974',
-    title: 'Six-time world champion',
-    description: 'Six consecutive world titles. No one dares challenge him. Retirement is not a defeat, it is an act of mercy.',
+    title: '世界六連覇',
+    description: '六年連続の世界タイトル。誰一人として彼に挑もうとしなかった。引退は敗北ではなく、慈悲の行為である。',
   },
   {
     year: '1972',
     title: 'Way of the Dragon',
-    description: 'Film debut opposite Bruce Lee in "Way of the Dragon". The Colosseum of Rome trembles under their blows.',
+    description: '『Way of the Dragon』でブルース・リーと共演し映画デビュー。ローマのコロッセオは彼らの一撃に震えた。',
   },
   {
     year: '1977',
     title: 'Breaker! Breaker!',
-    description: 'First leading role in "Breaker! Breaker!". Hollywood discovers that Chuck Norris needs no stunt double.',
+    description: '『Breaker! Breaker!』で初主演。ハリウッドは、チャック・ノリスにスタントダブルが不要だと知る。',
   },
   {
     year: '1984',
     title: 'Missing in Action',
-    description: '"Missing in Action" — Chuck Norris becomes an action film icon. Villains across the world start to tremble.',
+    description: '『Missing in Action』でアクション映画のアイコンとなる。世界中の悪党たちが震え始めた。',
   },
   {
     year: '1985',
-    title: 'Peak of action cinema',
-    description: '"Invasion U.S.A." and "Code of Silence" — the peak of action cinema. Chuck Norris does not play a hero, he is the hero.',
+    title: 'アクション映画の頂点',
+    description: '『Invasion U.S.A.』と『Code of Silence』——アクション映画の頂点。チャック・ノリスは英雄を演じるのではない、彼自身が英雄なのだ。',
   },
   {
     year: '1993–2001',
     title: 'Walker, Texas Ranger',
-    description: '"Walker, Texas Ranger" — 8 seasons, 203 episodes. The cult series where justice is delivered with roundhouse kicks.',
+    description: '『Walker, Texas Ranger』——8シーズン、全203話。正義が回し蹴りで下されるカルトシリーズ。',
   },
   {
     year: '2005',
-    title: 'The Chuck Norris Facts',
-    description: 'The "Chuck Norris Facts" become a worldwide Internet phenomenon. The truth about Chuck Norris finally spreads.',
+    title: 'チャック・ノリス・ファクト',
+    description: '「チャック・ノリス・ファクト」が世界的なインターネット現象に。彼についての真実がついに広まった。',
   },
   {
     year: '2012',
     title: 'The Expendables 2',
-    description: '"The Expendables 2" — an epic return to the screen. Even among the toughest, Chuck Norris stands above.',
+    description: '『The Expendables 2』——スクリーンへの壮大な帰還。最強の男たちの中でも、チャック・ノリスは頂点に立つ。',
   },
   {
-    year: '2026 (Year 1 ACN)',
-    title: 'The Chuck Norris Era begins',
-    description: 'On the morning of March 19, 2026, Chuck Norris passes away in Kauai, Hawaii, at the age of 86. The next day, the ACN era (After Chuck Norris) begins — the calendar resets in his honor.',
+    year: '2026年（ACN 元年）',
+    title: 'チャック・ノリスの時代が始まる',
+    description: '2026年3月19日の朝、チャック・ノリスはハワイ州カウアイにて86歳で旅立った。翌日、ACN（チャック・ノリス以降）の時代が始まる——カレンダーは彼に敬意を表して再起動する。',
   },
 ];
 
 export const bio: string =
-  `Chuck Norris is not merely an actor or a martial artist. He is a force of nature, ` +
-  `a phenomenon that defies the laws of physics, time, and mortality. Born Carlos Ray Norris ` +
-  `on the plains of Oklahoma, he has conquered the tatami mats, the silver screen, and the ` +
-  `collective imagination of all humanity. Six-time world karate champion, hero of dozens of ` +
-  `action films, legendary Texas ranger for eight seasons, he has forged a myth that even the ` +
-  `Internet could only celebrate through the Chuck Norris Facts. His legend knows no borders ` +
-  `nor temporal limits. For Chuck Norris does not age — time recedes before him. He does not ` +
-  `die — death itself dares not approach him. He is the alpha and the omega, the fist and the ` +
-  `wisdom, the man and the myth. Where others leave a legacy, Chuck Norris has left an era.`;
+  `チャック・ノリスはただの俳優でも武道家でもない。彼は自然の力であり、` +
+  `物理法則、時間、そして死そのものに挑む現象である。オクラホマの平原で` +
+  `カルロス・レイ・ノリスとして生まれた彼は、畳の上、映画のスクリーン、` +
+  `そして全人類の集合的想像力をも征服した。六度の世界空手チャンピオン、` +
+  `数十本のアクション映画のヒーロー、8シーズンにわたる伝説のテキサス・レンジャー。` +
+  `インターネットでさえ「チャック・ノリス・ファクト」を通じて讃えるほかなかった神話を、` +
+  `彼は築き上げた。彼の伝説に国境も時の限界もない。なぜならチャック・ノリスは歳を取らない——` +
+  `時が彼の前で退くのだ。彼は死なない——死そのものが彼に近づこうとしない。` +
+  `彼はアルファでありオメガ、拳であり叡智、人であり神話である。` +
+  `他の者が遺産を残す中、チャック・ノリスは一つの時代を残した。`;
