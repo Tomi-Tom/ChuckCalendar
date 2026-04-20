@@ -3,7 +3,10 @@ import { isLanguageCode, type LanguageCode } from './types';
 
 type Listener = (lang: LanguageCode) => void;
 
+const STORAGE_KEY = 'lang';
+
 let currentLanguage: LanguageCode = DEFAULT_LANGUAGE;
+let initialized = false;
 const listeners = new Set<Listener>();
 
 export function getLanguage(): LanguageCode {
@@ -14,7 +17,7 @@ export function setLanguage(code: LanguageCode): void {
   if (!isLanguageCode(code) || code === currentLanguage) return;
   currentLanguage = code;
   try {
-    localStorage.setItem('lang', code);
+    localStorage.setItem(STORAGE_KEY, code);
   } catch {
     // localStorage indisponible (mode privé strict) : on ignore
   }
@@ -22,7 +25,13 @@ export function setLanguage(code: LanguageCode): void {
   url.searchParams.set('lang', code);
   window.history.replaceState({}, '', url.toString());
   document.documentElement.lang = code;
-  listeners.forEach((cb) => cb(code));
+  for (const cb of [...listeners]) {
+    try {
+      cb(code);
+    } catch (err) {
+      console.error('[i18n] listener error', err);
+    }
+  }
 }
 
 export function onLanguageChange(callback: Listener): () => void {
@@ -35,7 +44,7 @@ export function detectInitialLanguage(): LanguageCode {
   if (isLanguageCode(fromUrl)) return fromUrl;
 
   try {
-    const fromStorage = localStorage.getItem('lang');
+    const fromStorage = localStorage.getItem(STORAGE_KEY);
     if (isLanguageCode(fromStorage)) return fromStorage;
   } catch {
     // ignore
@@ -48,6 +57,8 @@ export function detectInitialLanguage(): LanguageCode {
 }
 
 export function initI18n(): void {
+  if (initialized) return;
+  initialized = true;
   currentLanguage = detectInitialLanguage();
   document.documentElement.lang = currentLanguage;
   // Synchronise l'URL avec la langue détectée si elle n'y était pas
